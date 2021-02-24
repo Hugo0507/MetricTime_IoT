@@ -349,12 +349,3 @@ template {
 [hidden] {
   display: none;
 }
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-footer {
-  margin-top: auto;
-}

@@ -4,7 +4,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>Login - MetricTime</title>
+        <title>Registrar - MetricTime</title>
         <link rel="shortcut icon" href="/images/logo.ico" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
@@ -17,14 +17,14 @@ export default function Login() {
               alt="Workflow"
             />
             <h2 className="text-center text-3xl font-extrabold text-gray-900">
-              Iniciar Sesión
+              Registrarse
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               O
-              <Link href="/registrar">
+              <Link href="/">
                 <a className="font-medium text-indigo-600 hover:text-indigo-500">
                   {" "}
-                  Crea una cuenta
+                  Iniciar Sesión
                 </a>
               </Link>
             </p>
@@ -32,6 +32,19 @@ export default function Login() {
           <form className="mt-8 space-y-6" action="#" method="POST">
             <div className="rounded-md shadow-sm -space-y-px">
               <div className="mb-4">
+                <label for="nickname" className="sr-only">
+                  Nickname
+                </label>
+                <input
+                  id="nickname"
+                  name="nickname"
+                  type="text"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Nickname"
+                />
+              </div>
+              <div>
                 <label for="email-address" className="sr-only">
                   Correo electronico
                 </label>
@@ -45,7 +58,9 @@ export default function Login() {
                   placeholder="Email"
                 />
               </div>
-              <div>
+            </div>
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div className="mb-4">
                 <label for="password" className="sr-only">
                   Password
                 </label>
@@ -59,8 +74,20 @@ export default function Login() {
                   placeholder="Contraseña"
                 />
               </div>
+              <div className="mb-4">
+                <label for="confirm-password" className="sr-only">
+                  Password
+                </label>
+                <input
+                  id="confirm-password"
+                  name="confirm-password"
+                  type="password"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Repetir Contraseña"
+                />
+              </div>
             </div>
-
             <div>
               <button
                 type="submit"
@@ -81,7 +108,7 @@ export default function Login() {
                     />
                   </svg>
                 </span>
-                Iniciar Sesión
+                Registrarse
               </button>
             </div>
           </form>
