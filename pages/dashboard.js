@@ -1,17 +1,20 @@
 export default function Dashboard() {
   return (
-    <div>
-      <nav className="bg-gray-50">
+    <div className="h-full	">
+      <nav className="bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <img
-                  className="h-22 w-28"
-                  src="/images/logo.png"
+                  className="h-18 w-20"
+                  src="/images/logo3.png"
                   alt="Workflow"
                 />
               </div>
+              <p className="flex-shrink-0 text-3xl font-bold text-white">
+                MetricTime
+              </p>
               <div className=" hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
                   <a
@@ -23,16 +26,9 @@ export default function Dashboard() {
 
                   <a
                     href="#"
-                    className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Instrucciones
-                  </a>
-
-                  <a
-                    href="#"
-                    className="text-black-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    Historial
                   </a>
                 </div>
               </div>
@@ -232,9 +228,9 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      <header className="bg-gray-800	 text-white shadow">
+      <header className="bg-white	 shadow">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-white">
+          <h1 className="text-3xl font-bold">
             <svg
               className="w-10 inline-block "
               xmlns="http://www.w3.org/2000/svg"
@@ -255,11 +251,41 @@ export default function Dashboard() {
       </header>
       <main>
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <div className="flex justify-center	">
+            <h2 className="font-mono font-bold text-2xl">
+              <svg
+                className="w-12 inline-block text-blue-600	 "
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>{" "}
+              Agentes Recientes
+            </h2>
+          </div>
+
           <div className="px-4 py-6 sm:px-0">
             <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
           </div>
         </div>
       </main>
+
+      <footer className="">
+        <div className="mx-auto w-3/4">
+          <div className="  border-solid border-2 border-light-gray"></div>
+          <p className="mt-4 font-light text-base		">
+            © {new Date().getFullYear()} MetricTime . Todos los Derechos
+            Reservados
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

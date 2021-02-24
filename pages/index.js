@@ -4,11 +4,11 @@ export default function Login() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <img
-            className="mx-auto w-40 h-28"
-            src="/images/logo.png"
+            className="mx-auto w-30 h-30"
+            src="/images/logo3.png"
             alt="Workflow"
           />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="text-center text-3xl font-extrabold text-gray-900">
             Iniciar Sesión
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
