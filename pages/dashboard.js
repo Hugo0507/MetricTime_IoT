@@ -1,11 +1,11 @@
 import Agents from "../components/Agents";
 import Layout from "../components/Layout";
-
+import Graph from "../components/Graph";
 export default function Dashboard() {
   return (
-    <Layout title="dashboard">
+    <Layout title="Dashboard">
       <main>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="flex justify-center	">
             <h2 className="font-mono font-bold text-2xl">
               <svg

@@ -349,3 +349,20 @@ template {
 [hidden] {
   display: none;
 }
+
+@media (min-width: 641px) {
+  .chartjs-render-monitor {
+    width: 80vh;
+    height: 50vh;
+    max-height: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto;
+  }
+}
+
+/* @media (max-width: 640px) {
+  .canvas-container {
+    width: 100% !important;
+    height: 70% !important;
+  }
+} */
