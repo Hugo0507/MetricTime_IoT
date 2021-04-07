@@ -55,10 +55,10 @@ export default function Graph() {
     <div className="canvas-container mx-auto">
       <Line
         data={chartData}
-        width={140}
-        height={120}
+        width={20}
+        height={10}
         options={{
-          maintainAspectRatio: false,
+          maintainAspectRatio: true,
           legend: {
             display: false,
           },

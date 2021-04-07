@@ -1,15 +1,17 @@
 import Agents from "../components/Agents";
 import Layout from "../components/Layout";
 import Graph from "../components/Graph";
+import { useState } from "react";
+
 export default function Dashboard() {
   return (
     <Layout title="Dashboard">
       <main>
         <div className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="flex justify-center	">
-            <h2 className="font-mono font-bold text-2xl">
+            <h2 className="font-mono font-bold text-xl sm:text-2xl">
               <svg
-                className="w-10 inline-block text-blue-600 	 "
+                className="w-8 inline-block text-blue-600 	 "
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"

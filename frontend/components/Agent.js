@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Metric from "../components/Metric";
-export default function Agent() {
-  const [openMetric, setOpenMetric] = useState(false);
+export default function Agent({ nombre }) {
+  const [openMetric, setOpenMetric] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
 
   const toggleMetric = () => {
     setOpenMetric(!openMetric);
@@ -11,7 +11,7 @@ export default function Agent() {
       className="p-2 sm:p-2 md:p-5 bg-gray-100 mb-2 font-	
   "
     >
-      <div className="flex justify-between	">
+      <div className="flex justify-between" id="titulo">
         <h3>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -27,12 +27,12 @@ export default function Agent() {
             />
           </svg>{" "}
           <span className="font-bold text-sm md:text-lg">
-            Agente MetricTime 1 - 1569303
+            Agente 1 - 324124
           </span>
         </h3>
         <span>
           <svg
-            className="w-8 text-green-500 animate-pulse inline-block 	"
+            className="w-6 sm:w-8 text-green-500 animate-pulse inline-block 	"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -48,8 +48,11 @@ export default function Agent() {
         </span>
       </div>
 
-      <p className="p-1"> ns-local</p>
-      <button onClick={toggleMetric} className="text-red-600 p-1">
+      <p className="p-1 text-sm sm:text-lg"> ns-local</p>
+      <button
+        onClick={toggleMetric}
+        className="text-sm sm:text-lg text-red-600 p-1"
+      >
         Ver Metricas{" "}
         {openMetric ? (
           <svg
