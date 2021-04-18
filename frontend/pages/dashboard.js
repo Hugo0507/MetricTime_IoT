@@ -1,9 +1,15 @@
 import Agents from "../components/Agents";
 import Layout from "../components/Layout";
 import Graph from "../components/Graph";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
+const socket = io();
 
 export default function Dashboard() {
+  socket.on("agent/message", (message) => {
+    console.log("mes", message);
+  });
+
   return (
     <Layout title="Dashboard">
       <main>

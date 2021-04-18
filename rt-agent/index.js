@@ -20,7 +20,7 @@ const options = {
   },
 };
 
-class RtverseAgent extends EventEmitter {
+class RtAgent extends EventEmitter {
   constructor(opts) {
     super();
     this._options = defaults(opts, options);
@@ -119,4 +119,4 @@ class RtverseAgent extends EventEmitter {
   }
 }
 
-module.exports = RtverseAgent;
+module.exports = RtAgent;

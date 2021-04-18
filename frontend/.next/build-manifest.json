@@ -28,11 +28,6 @@
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/dashboard.js"
-    ],
-    "/registrar": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/registrar.js"
     ]
   },
   "ampFirstPages": []

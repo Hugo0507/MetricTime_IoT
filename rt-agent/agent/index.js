@@ -1,6 +1,6 @@
-const RtverseAgent = require("../");
+const RtAgent = require("../");
 
-const agent = new RtverseAgent({
+const agent = new RtAgent({
   name: "app-prueba",
   username: "darcdev",
   interval: 2000,
