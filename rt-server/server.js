@@ -1,9 +1,8 @@
 const db = require("./db/Database");
 const mosca = require("mosca");
 const configDB = require("./config/db");
-const mqttConfig = require("./config/mqtt");
 const parsePayload = require("./utils/parsePayload");
-
+const configMqtt = require("./config/mqtt");
 class MQTTServer {
   constructor(settings) {
     this.server = mosca.Server(settings);
@@ -62,6 +61,9 @@ class MQTTServer {
             let user;
             try {
               user = await this.User.findByUsername(payload.agent.username);
+              if (!user) {
+                throw new Error("User not exist");
+              }
               if (user.token !== payload.token) {
                 throw new Error("invalid token");
               }
@@ -133,9 +135,6 @@ function handleError(err) {
 process.on("uncaughtException", handleFatalError);
 process.on("unhandledRejection", handleFatalError);
 
-function d() {
-  new MQTTServer(mqttConfig);
-}
-d();
+new MQTTServer(configMqtt);
 
 module.exports = MQTTServer;
