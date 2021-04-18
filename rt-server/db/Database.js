@@ -1,5 +1,8 @@
 const Sequelize = require("sequelize");
 const Model = require("../models/Model");
+const setupAgent = require("../db/Agent");
+const setupUser = require("../db/User");
+const setupMetric = require("../db/Metric");
 
 class Database {
   constructor(config) {
@@ -18,7 +21,8 @@ class Database {
     if (this.config.setup) {
       await this.db.sync({ force: true });
     }
-    return models;
+    const actions = this.setActions(models);
+    return actions;
   }
   setupModels() {
     this.connect();
@@ -39,6 +43,17 @@ class Database {
     AgentModel.belongsTo(UserModel);
 
     return { AgentModel, MetricModel, UserModel };
+  }
+
+  setActions({ AgentModel, MetricModel, UserModel }) {
+    const Agent = setupAgent(AgentModel);
+    const User = setupUser(UserModel);
+    const Metric = setupMetric(MetricModel, AgentModel);
+    return {
+      Agent,
+      User,
+      Metric,
+    };
   }
 }
 
