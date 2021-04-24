@@ -1,28 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import Graph from "../components/Graph";
 import { Line } from "react-chartjs-2";
 
+const line = {
+  labels: [],
+  datasets: [
+    {
+      lineTension: 0.4,
+      backgroundColor: "#ffb1c199",
+      borderColor: "#ff6384",
+      borderWidth: 2,
+      borderJoinStyle: "round",
+      fill: true,
+      pointRadius: 3,
+      pointBorderColor: "#ff6384",
+      pointBackgroundColor: "#ffb1c1",
+      pointBorderWidth: 3,
+      data: [],
+    },
+  ],
+};
 export default function Metric({ uuid, socket, type, mtToken }) {
   // const [dataCollection, setDataCollection] = useState({});
-  const graphReference = useState(null);
-  const line = {
-    labels: [],
-    datasets: [
-      {
-        lineTension: 0.4,
-        backgroundColor: "#ffb1c199",
-        borderColor: "#ff6384",
-        borderWidth: 2,
-        borderJoinStyle: "round",
-        fill: true,
-        pointRadius: 3,
-        pointBorderColor: "#ff6384",
-        pointBackgroundColor: "#ffb1c1",
-        pointBorderWidth: 3,
-        data: [],
-      },
-    ],
-  };
+  const graphReference = useRef();
+
   useEffect(() => {
     let dataResult;
     let oldLabels = [];
@@ -44,30 +45,24 @@ export default function Metric({ uuid, socket, type, mtToken }) {
           oldData.push(m.value);
         });
       }
-      setDataCollection(() => ({
-        labels: oldLabels,
-        data: oldData,
-      }));
+
+      line.labels = oldLabels;
+      line.datasets[0].data = oldData;
     } catch (error) {
       return;
     }
+
     socket.on("agent/message", (payload) => {
       if (payload.token !== mtToken) return;
 
       if (payload.agent.uuid === uuid) {
         const metric = payload.metrics.find((m) => m.type === type);
 
-        let labels;
-        let data;
+        const chart = graphReference.current;
+        const data = chart.data.datasets[0].data;
+        const labels = chart.data.labels;
 
-        if (Object.keys(dataCollection).length === 0) {
-          labels = oldLabels;
-          data = oldData;
-        } else {
-          labels = dataCollection.labels;
-          data = dataCollection.datasets[0].data;
-        }
-
+        if (!graphReference.current) return;
         if (data.length >= 20) {
           labels.shift();
           data.shift();
@@ -75,11 +70,7 @@ export default function Metric({ uuid, socket, type, mtToken }) {
 
         labels.push("1:08");
         data.push(metric.value);
-
-        setDataCollection(() => ({
-          labels,
-          data,
-        }));
+        chart.update({ preservation: true });
       }
     });
   }, []);
@@ -88,25 +79,7 @@ export default function Metric({ uuid, socket, type, mtToken }) {
     <div className="border-gray-200 rounded-lg h-auto md:p-4	">
       <div className=" bg-gray-50 p-2">
         <div className="h-auto">
-          <div className="canvas-container mx-auto">
-            <Line
-              ref={(reference) => {
-                graphReference = reference;
-              }}
-              data={}
-              width={20}
-              height={10}
-              options={{
-                maintainAspectRatio: true,
-                plugins: {
-                  legend: {
-                    display: false,
-                  },
-                },
-              }}
-            />
-          </div>
-          {/* <Graph dataCollection={dataCollection} /> */}
+          <Graph line={line} graphReference={graphReference} />
         </div>
       </div>
     </div>

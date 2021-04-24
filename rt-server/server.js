@@ -46,7 +46,7 @@ class MQTTServer {
             agent: {
               uuid: agent.uuid,
             },
-            token: agent.tok,
+            token: agent.token,
           }),
         });
         console.log(

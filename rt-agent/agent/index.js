@@ -1,7 +1,7 @@
 const RtAgent = require("../");
 
 const agent = new RtAgent({
-  name: "app-prueba",
+  name: "app-prueba" + Math.round(Math.random(), 3),
   username: "darcdev",
   interval: 2000,
   token: "5yQZwZsLCaW9W3kmKxx7Ac",

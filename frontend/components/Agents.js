@@ -5,14 +5,12 @@ export default function Agents({ socket, mtToken }) {
   const [agents, setAgents] = useState([]);
 
   useEffect(() => {
-    // const savedAgents = [{ uuid: 1 }, { uuid: 2 }, { uuid: 3 }];
-    // setAgents([...savedAgents, ...agents]);
+    const savedAgents = [{ uuid: 1 }, { uuid: 2 }, { uuid: 3 }];
+    setAgents([...savedAgents, ...agents]);
   }, []);
 
   socket.on("agent/connected", (payload) => {
-    console.log(payload);
     if (payload.token !== mtToken) return;
-    // if (payload.token === mtToken);
     const { uuid } = payload;
     const existAgent = agents.find((agent) => agent.uuid === uuid);
 

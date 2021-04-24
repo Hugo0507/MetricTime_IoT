@@ -1,27 +1,11 @@
 import { Line } from "react-chartjs-2";
 
-export default function Graph({ dataCollection }) {
+export default function Graph({ graphReference, line }) {
   return (
     <div className="canvas-container mx-auto">
       <Line
-        data={{
-          labels: dataCollection.labels,
-          datasets: [
-            {
-              lineTension: 0.4,
-              backgroundColor: "#ffb1c199",
-              borderColor: "#ff6384",
-              borderWidth: 2,
-              borderJoinStyle: "round",
-              fill: true,
-              pointRadius: 3,
-              pointBorderColor: "#ff6384",
-              pointBackgroundColor: "#ffb1c1",
-              pointBorderWidth: 3,
-              data: dataCollection.data,
-            },
-          ],
-        }}
+        ref={graphReference}
+        data={line}
         width={20}
         height={10}
         options={{

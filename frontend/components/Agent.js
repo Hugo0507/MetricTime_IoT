@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Metric from "../components/Metric";
 export default function Agent({ uuid, socket, mtToken }) {
-  const [openMetric, setOpenMetric] = useState(true);
+  const [openMetric, setOpenMetric] = useState(false);
   const [agent, setAgent] = useState({
     name: null,
     hostname: null,
@@ -15,7 +15,7 @@ export default function Agent({ uuid, socket, mtToken }) {
     let dataAgent;
     try {
       dataAgent = {
-        name: "app-prueba",
+        name: "app-prueba" + Math.random() * 100,
         hostname: "linux",
         connected: true,
         pid: "49593",
@@ -33,6 +33,7 @@ export default function Agent({ uuid, socket, mtToken }) {
         pid: dataAgent.pid,
       };
     });
+
     // load metrics
     let metrics;
     try {
