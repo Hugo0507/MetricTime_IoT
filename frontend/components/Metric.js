@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import Graph from "../components/Graph";
-import { Line } from "react-chartjs-2";
+import format from "date-fns/format";
+import { parseISO } from "date-fns";
 
 const line = {
   labels: [],
@@ -58,17 +59,21 @@ export default function Metric({ uuid, socket, type, mtToken }) {
       if (payload.agent.uuid === uuid) {
         const metric = payload.metrics.find((m) => m.type === type);
 
+        console.log(metric.createdAt);
+        if (!graphReference.current) return;
+
         const chart = graphReference.current;
         const data = chart.data.datasets[0].data;
         const labels = chart.data.labels;
 
-        if (!graphReference.current) return;
         if (data.length >= 20) {
           labels.shift();
           data.shift();
         }
 
-        labels.push("1:08");
+        console.log(metric.createdAt);
+
+        labels.push(format(parseISO(metric.createdAt), "HH:mm:ss"));
         data.push(metric.value);
         chart.update({ preservation: true });
       }
