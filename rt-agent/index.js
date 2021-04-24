@@ -78,7 +78,7 @@ class RtAgent extends EventEmitter {
                 value: await Promise.resolve(fn()),
               });
             }
-            console.log(`Sending`, message);
+            console.log(message);
             this._client.publish("agent/message", JSON.stringify(message));
             this.emit("message", message);
           }

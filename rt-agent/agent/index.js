@@ -8,7 +8,7 @@ const agent = new RtAgent({
 });
 
 agent.addMetric("rss", function getRss() {
-  return process.memoryUsage().rss;
+  return Promise.resolve(Math.random());
 });
 
 agent.addMetric("promiseMetric", function getRandomPromise() {
@@ -27,14 +27,14 @@ const handler = (payload) => {
   console.log(payload);
 };
 
-agent.on("connected", handler);
-agent.on("disconnected", handler);
-agent.on("message", handler);
+// agent.on("connected", handler);
+// agent.on("disconnected", handler);
+// agent.on("message", handler);
 
-agent.on("agent/connected", handler);
-agent.on("agent/disconnected", handler);
-agent.on("agent/message", (payload) => {
-  console.log(payload);
-});
+// agent.on("agent/connected", handler);
+// agent.on("agent/disconnected", handler);
+// agent.on("agent/message", (payload) => {
+//   console.log(payload);
+// });
 
-// setTimeout(() => agent.disconnect(), 10000);
+// // setTimeout(() => agent.disconnect(), 10000);

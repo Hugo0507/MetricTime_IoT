@@ -25,7 +25,7 @@ export default function InfoProfile() {
           </div>
         </div>
         <div className="mt-5 md:mt-0 md:col-span-2">
-          <htmlForm action="#" method="POST">
+          <form action="#" method="POST">
             <div className="shadow overflow-hidden sm:rounded-md">
               <div className="px-4 py-5 bg-white sm:p-6">
                 <div className="grid grid-cols-6 gap-6">
@@ -87,7 +87,7 @@ export default function InfoProfile() {
                 </button>
               </div>
             </div>
-          </htmlForm>
+          </form>
         </div>
       </div>
     </div>

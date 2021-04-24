@@ -8,20 +8,32 @@ class MQTTServer {
     this.server = mosca.Server(settings);
     this.clients = new Map();
     this.entities = {};
-    this.events();
+    this.initializeEvents();
   }
-  events() {
+
+  initializeEvents() {
+    this.readyServer();
+    this.connectClient();
+    this.publishMessage();
+    this.disconnectClient();
+    this.handleErrors();
+  }
+
+  connectClient = () => {
     this.server.on("clientConnected", (client) => {
       console.log(`Client connected ${client.id}`);
       this.clients.set(client.id, null);
     });
+  };
+
+  disconnectClient = () => {
     this.server.on("clientDisconnected", async (client) => {
       const agent = this.clients.get(client.id);
 
       if (agent) {
         agent.connected = false;
         try {
-          await Agent.createOrUpdate(agent);
+          await this.Agent.createOrUpdate(agent);
         } catch (error) {
           return handleError(error);
         }
@@ -34,6 +46,7 @@ class MQTTServer {
             agent: {
               uuid: agent.uuid,
             },
+            token: agent.tok,
           }),
         });
         console.log(
@@ -41,11 +54,10 @@ class MQTTServer {
         );
       }
     });
-    /**
-     * When the client publish message
-     */
+  };
+
+  publishMessage = () => {
     this.server.on("published", async (packet, client) => {
-      console.log(packet.topic);
       switch (packet.topic) {
         case "agent/connected":
         case "agent/disconnected":
@@ -76,7 +88,7 @@ class MQTTServer {
             console.log(`Agent ${agent.uuid} saved`);
 
             if (!this.clients.get(client.id)) {
-              this.clients.set(client.id, agent);
+              this.clients.set(client.id, { ...agent, token: payload.token });
               this.server.publish({
                 topic: "agent/connected",
                 payload: JSON.stringify({
@@ -87,13 +99,13 @@ class MQTTServer {
                     pid: agent.pid,
                     connected: agent.connected,
                   },
+                  token: payload.token,
                 }),
               });
             }
             for (let metric of payload.metrics) {
               let met;
               try {
-                console.log("met", metric);
                 met = await this.Metric.create(agent.uuid, metric);
               } catch (error) {
                 return handleError(error);
@@ -104,9 +116,9 @@ class MQTTServer {
           break;
       }
     });
-    /**
-     *  When the server is up and start
-     */
+  };
+
+  readyServer = () => {
     this.server.on("ready", async () => {
       let config = configDB();
       const services = await new db(config)
@@ -118,8 +130,11 @@ class MQTTServer {
       this.User = services.User;
       console.log(`[rtverse-mqtt] server is running`);
     });
+  };
+
+  handleErrors = () => {
     this.server.on("error", handleFatalError);
-  }
+  };
 }
 
 function handleFatalError(err) {

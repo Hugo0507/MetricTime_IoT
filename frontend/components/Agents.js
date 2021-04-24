@@ -1,16 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Agent from "./Agent";
-import Graph from "./Graph";
 
-export default function Agents() {
-  const [agents, setAgents] = useState([1, 2, 3, 4, 5, 6, 7]);
+export default function Agents({ socket, mtToken }) {
+  const [agents, setAgents] = useState([]);
 
+  useEffect(() => {
+    // const savedAgents = [{ uuid: 1 }, { uuid: 2 }, { uuid: 3 }];
+    // setAgents([...savedAgents, ...agents]);
+  }, []);
+
+  socket.on("agent/connected", (payload) => {
+    console.log(payload);
+    if (payload.token !== mtToken) return;
+    // if (payload.token === mtToken);
+    const { uuid } = payload;
+    const existAgent = agents.find((agent) => agent.uuid === uuid);
+
+    if (!existAgent) {
+      setAgents([payload.agent, ...agents]);
+    }
+  });
   return (
     <>
       <div className="grid grid-cols-5 gap-x-2 grid-flow-row auto-rows-max ">
         <div className="col-span-5	">
-          {agents.map((agent, idx) => {
-            return <Agent key={idx} agent={agent} />;
+          {agents.map((agent) => {
+            return (
+              <Agent
+                mtToken={mtToken}
+                key={agent.uuid}
+                uuid={agent.uuid}
+                socket={socket}
+              />
+            );
           })}
         </div>
       </div>

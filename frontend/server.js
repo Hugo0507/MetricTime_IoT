@@ -36,7 +36,6 @@ nextApp.prepare().then(() => {
   io.on("connect", (socket) => {
     console.log("socket client", socket.id);
     // guardamos el mensaje en nuestra "DB"
-    console.log("entre");
     pipe(agent, socket);
   });
 });

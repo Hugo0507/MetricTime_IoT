@@ -1,14 +1,25 @@
+import { useEffect, useState } from "react";
 import Agents from "../components/Agents";
 import Layout from "../components/Layout";
-import Graph from "../components/Graph";
-import { useEffect, useState } from "react";
 import io from "socket.io-client";
-const socket = io();
 
 export default function Dashboard() {
-  socket.on("agent/message", (message) => {
-    console.log("mes", message);
-  });
+  const [socket, setSocket] = useState(null);
+  const [mtToken, setMtToken] = useState(null);
+
+  useEffect(() => {
+    const socket = io();
+    socket.open();
+    setSocket(socket);
+
+    setMtToken(
+      localStorage.getItem("metrictime-token") || "5yQZwZsLCaW9W3kmKxx7Ac"
+    );
+
+    return () => {
+      socket.close();
+    };
+  }, []);
 
   return (
     <Layout title="Dashboard">
@@ -36,7 +47,8 @@ export default function Dashboard() {
 
           <div className="px-4 py-6 sm:px-0">
             <div className="border-4 border-dashed border-gray-200 h-auto rounded-lg h-96 p-4	">
-              <Agents />
+              {console.log(mtToken)}
+              {socket && <Agents mtToken={mtToken} socket={socket} />}
             </div>
           </div>
         </div>
