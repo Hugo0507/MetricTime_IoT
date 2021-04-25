@@ -4,7 +4,7 @@ import ConfigToken from "../components/ConfigToken";
 
 export default function Profile() {
   return (
-    <Layout notHeader={true}>
+    <Layout title={"Perfil"} notHeader={true}>
       <div className="p-5 bg-gray-100">
         <InfoProfile />
         <div className="hidden sm:block" aria-hidden="true">
