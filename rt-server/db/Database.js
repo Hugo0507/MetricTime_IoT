@@ -3,7 +3,6 @@ const Model = require("../models/Model");
 const setupAgent = require("../db/Agent");
 const setupUser = require("../db/User");
 const setupMetric = require("../db/Metric");
-
 class Database {
   constructor(config) {
     this.config = config;
