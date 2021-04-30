@@ -15,10 +15,14 @@ class DatabaseModel {
     return this.sequelize.define(this.entities.agentModel, Agent);
   }
   defineMetric() {
-    return this.sequelize.define(this.entities.metricModel, Metric);
+    return this.sequelize.define(this.entities.metricModel, Metric, {
+      updatedAt: false,
+    });
   }
   defineUser() {
-    return this.sequelize.define(this.entities.userModel, User);
+    return this.sequelize.define(this.entities.userModel, User, {
+      timestamps: false,
+    });
   }
 }
 

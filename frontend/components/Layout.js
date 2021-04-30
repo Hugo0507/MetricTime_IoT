@@ -2,13 +2,12 @@ import Head from "next/head";
 import Nav from "./Nav";
 import Header from "./Header";
 import Footer from "./Footer";
-
-export default function Layout({ children, title, notHeader }) {
+export default function Layout({ children, title, notHeader, notNav }) {
   return (
     <>
       <Head>
         <title>{title} | MetricTime</title>
-        <link rel="shortcut icon" href="/images/logo.ico" />
+        <link rel="shortcut icon" href="/images/favicon.ico" />
         <meta charSet="utf-8" />
         <meta name="author" content="MetricTime" />
         <meta
@@ -27,7 +26,8 @@ export default function Layout({ children, title, notHeader }) {
         />
       </Head>
       <div className="h-full pb-4">
-        <Nav />
+        {!notNav && <Nav />}
+
         {!notHeader && <Header />}
         {children}
         <Footer />

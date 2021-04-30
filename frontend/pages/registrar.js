@@ -13,7 +13,7 @@ export default function Login() {
           <div>
             <img
               className="mx-auto w-30 h-30"
-              src="/images/logo3.png"
+              src="/images/logo.png"
               alt="Workflow"
             />
             <h2 className="text-center text-3xl font-extrabold text-gray-900">

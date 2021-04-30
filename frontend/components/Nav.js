@@ -22,7 +22,7 @@ export default function Nav() {
               <a className="flex items-center">
                 <img
                   className="sm:h-18 h-14 w-16 sm:w-20"
-                  src="/images/logo3.png"
+                  src="/images/logo.png"
                   alt="Workflow"
                 />
                 <p className="flex-shrink-0 text-2xl sm:text-3xl font-bold text-white">

@@ -3,7 +3,7 @@ const RtAgent = require("../");
 const agent = new RtAgent({
   name: "app-prueba" + Math.round(Math.random(), 3),
   username: "darcdev",
-  interval: 2000,
+  interval: 1000,
   token: "5yQZwZsLCaW9W3kmKxx7Ac",
 });
 
