@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import Metric from "../components/Metric";
+import axios from "axios";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig: publicConfig } = getConfig();
+
 export default function Agent({ uuid, socket, mtToken }) {
   const [openMetric, setOpenMetric] = useState(false);
+  const [disconnected, setDisconnected] = useState(false);
   const [agent, setAgent] = useState({
     name: null,
     hostname: null,
@@ -12,47 +18,43 @@ export default function Agent({ uuid, socket, mtToken }) {
   });
 
   useEffect(() => {
-    let dataAgent;
-    try {
-      dataAgent = {
-        name: "app-prueba" + Math.random() * 100,
-        hostname: "linux",
-        connected: true,
-        pid: "49593",
-      };
-    } catch (error) {
-      return;
+    async function fetchAgent() {
+      try {
+        const { data: dataAgent } = await axios.get(
+          `${publicConfig.api_url}/api/agent/${uuid}`
+        );
+
+        setAgent((agent) => {
+          return {
+            ...agent,
+            name: dataAgent.name,
+            hostname: dataAgent.hostname,
+            connected: dataAgent.connected,
+            pid: dataAgent.pid,
+          };
+        });
+      } catch (error) {
+        return;
+      }
+
+      try {
+        const { data: metrics } = await axios.get(
+          `${publicConfig.api_url}/api/metrics/${uuid}`
+        );
+
+        setAgent((agent) => {
+          return {
+            ...agent,
+            metrics,
+          };
+        });
+      } catch (error) {
+        return;
+      }
     }
-
-    setAgent((agent) => {
-      return {
-        ...agent,
-        name: dataAgent.name,
-        hostname: dataAgent.hostname,
-        connected: dataAgent.connected,
-        pid: dataAgent.pid,
-      };
-    });
-
-    // load metrics
-    let metrics;
-    try {
-      metrics = [
-        { type: "rss" },
-        { type: "promiseMetric" },
-        { type: "callbackMetric" },
-      ];
-
-      setAgent((agent) => {
-        return {
-          ...agent,
-          metrics,
-        };
-      });
-    } catch (error) {
-      return;
-    }
+    fetchAgent();
   }, []);
+
   const toggleMetric = () => {
     setOpenMetric(!openMetric);
   };
@@ -65,6 +67,8 @@ export default function Agent({ uuid, socket, mtToken }) {
         ...agent,
         connected: false,
       }));
+
+      setDisconnected(true);
     }
   });
   return (
@@ -195,6 +199,7 @@ export default function Agent({ uuid, socket, mtToken }) {
                   socket={socket}
                   type={metric.type}
                   mtToken={mtToken}
+                  disconnected={disconnected}
                 />
               </li>
             ))}

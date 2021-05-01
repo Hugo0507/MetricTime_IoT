@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
 import Agent from "./Agent";
+import axios from "axios";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig: publicConfig } = getConfig();
 
 export default function Agents({ socket, mtToken }) {
   const [agents, setAgents] = useState([]);
 
   useEffect(() => {
-    const savedAgents = [{ uuid: 1 }, { uuid: 2 }, { uuid: 3 }];
-    setAgents([...savedAgents, ...agents]);
+    async function fetchAgents() {
+      const { data: savedAgents } = await axios.get(
+        `${publicConfig.api_url}/api/agents/1`
+      );
+      setAgents([...savedAgents, ...agents]);
+    }
+
+    fetchAgents();
   }, []);
 
   socket.on("agent/connected", (payload) => {

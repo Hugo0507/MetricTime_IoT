@@ -89,7 +89,7 @@ public class ServiciosDao implements DAO<Agents>, DAO2<Agent>, DAO3<Metrics>, DA
 
 	@Override
 	public List<Metrics2> getmetricas(String uuid, String type) {
-		String sql = "SELECT metrics.id, type , value , metrics.created_at FROM metrics INNER JOIN agents ON  metrics.agent_id = agents.id WHERE agents.uuid LIKE ? and  metrics.type LIKE ? limit 20";
+		String sql = "SELECT metrics.id, type , value , metrics.created_at FROM metrics INNER JOIN agents ON  metrics.agent_id = agents.id WHERE agents.uuid LIKE ? and  metrics.type LIKE ? ORDER BY metrics.created_at ASC limit 20";
 		return jdbcTemplate.query(sql, rowMapper4, new Object[]{uuid, type});
 	}
 

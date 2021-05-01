@@ -15,7 +15,6 @@ export default function Dashboard() {
     setMtToken(
       localStorage.getItem("metrictime-token") || "5yQZwZsLCaW9W3kmKxx7Ac"
     );
-
     return () => {
       socket.close();
     };

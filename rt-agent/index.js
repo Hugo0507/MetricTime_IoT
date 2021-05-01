@@ -76,7 +76,7 @@ class RtAgent extends EventEmitter {
               message.metrics.push({
                 type: metric,
                 value: await Promise.resolve(fn()),
-                createdAt: new Date(),
+                createdat: new Date().getTime(),
               });
             }
             console.log(message);

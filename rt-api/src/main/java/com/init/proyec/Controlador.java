@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,7 @@ import com.init.proyec.modelos.Metrics;
 import com.init.proyec.modelos.Metrics2;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4000")
 public class Controlador {
 	private DAO<Agents> dao;
 	private DAO2<Agent> dao2;
@@ -58,7 +60,6 @@ public class Controlador {
 	public List<Metrics> listtype(@PathVariable String uuid) {
         return dao3.gettype(uuid);
     }
-	
 	@RequestMapping(value="/metrics/{uuid}/{type}", method = RequestMethod.GET)
 	public List<Metrics2> listmetrics(@PathVariable String uuid, @PathVariable String type) {
         return dao4.getmetricas(uuid, type);

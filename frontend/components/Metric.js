@@ -2,7 +2,9 @@ import { useEffect, useRef } from "react";
 import Graph from "../components/Graph";
 import format from "date-fns/format";
 import { parseISO } from "date-fns";
-
+import axios from "axios";
+import getConfig from "next/config";
+const { publicRuntimeConfig: publicConfig } = getConfig();
 const line = {
   labels: [],
   datasets: [
@@ -21,37 +23,42 @@ const line = {
     },
   ],
 };
-export default function Metric({ uuid, socket, type, mtToken }) {
+export default function Metric({ disconnected, uuid, socket, type, mtToken }) {
   // const [dataCollection, setDataCollection] = useState({});
   const graphReference = useRef();
 
   useEffect(() => {
-    let dataResult;
-    let oldLabels = [];
-    let oldData = [];
-    try {
-      dataResult = [
-        { id: 1, type: "rss", value: Math.random(), createdAt: "01:04" },
-        { id: 2, type: "rss", value: Math.random(), createdAt: "01:05" },
-        { id: 3, type: "rss", value: Math.random(), createdAt: "01:06" },
-        { id: 4, type: "rss", value: Math.random(), createdAt: "01:07" },
-        { id: 5, type: "rss", value: Math.random(), createdAt: "01:08" },
-        { id: 6, type: "rss", value: Math.random(), createdAt: "01:09" },
-        { id: 7, type: "rss", value: Math.random(), createdAt: "01:10" },
-      ];
+    const oldLabels = [];
+    const oldData = [];
 
-      if (Array.isArray(dataResult)) {
-        dataResult.forEach((m) => {
-          oldLabels.push(m.createdAt);
-          oldData.push(m.value);
-        });
+    async function fetchMetrics() {
+      try {
+        const { data: dataResult } = await axios.get(
+          `${publicConfig.api_url}/api/metrics/${uuid}/${type}`
+        );
+
+        if (!graphReference.current) return;
+
+        const chart = graphReference.current;
+        const dataset = chart.data.datasets[0];
+        const data = chart.data;
+
+        if (Array.isArray(dataResult)) {
+          dataResult.forEach((m) => {
+            oldLabels.push(format(parseISO(m.createdat), "HH:mm:ss"));
+            oldData.push(m.value);
+          });
+        }
+
+        data.labels = oldLabels;
+        dataset.data = oldData;
+
+        graphReference.current.update({ preservation: true });
+      } catch (error) {
+        return;
       }
-
-      line.labels = oldLabels;
-      line.datasets[0].data = oldData;
-    } catch (error) {
-      return;
     }
+    fetchMetrics();
 
     socket.on("agent/message", (payload) => {
       if (payload.token !== mtToken) return;
@@ -59,7 +66,6 @@ export default function Metric({ uuid, socket, type, mtToken }) {
       if (payload.agent.uuid === uuid) {
         const metric = payload.metrics.find((m) => m.type === type);
 
-        console.log(metric.createdAt);
         if (!graphReference.current) return;
 
         const chart = graphReference.current;
@@ -69,16 +75,19 @@ export default function Metric({ uuid, socket, type, mtToken }) {
         if (data.length >= 20) {
           labels.shift();
           data.shift();
+          line.labels.shift();
+          line.datasets[0].data.shift();
         }
 
-        console.log(metric.createdAt);
+        const labelM = format(metric.createdat, "HH:mm:ss");
+        const dataM = metric.value;
+        labels.push(labelM);
+        data.push(dataM);
 
-        labels.push(format(parseISO(metric.createdAt), "HH:mm:ss"));
-        data.push(metric.value);
         chart.update({ preservation: true });
       }
     });
-  }, []);
+  }, [disconnected]);
 
   return (
     <div className="border-gray-200 rounded-lg h-auto md:p-4	">
