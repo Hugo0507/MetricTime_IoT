@@ -28,6 +28,15 @@ export default function Agents({ socket, mtToken }) {
       setAgents([payload.agent, ...agents]);
     }
   });
+
+  const removeAgent = (uuid) => {
+    setAgents((agents) => [
+      ...agents.filter((agent) => {
+        return agent.uuid !== uuid;
+      }),
+    ]);
+  };
+
   return (
     <>
       <div className="grid grid-cols-5 gap-x-2 grid-flow-row auto-rows-max ">
@@ -39,6 +48,7 @@ export default function Agents({ socket, mtToken }) {
                 key={agent.uuid}
                 uuid={agent.uuid}
                 socket={socket}
+                removeAgent={removeAgent}
               />
             );
           })}

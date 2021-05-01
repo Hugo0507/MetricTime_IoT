@@ -5,7 +5,7 @@ import getConfig from "next/config";
 
 const { publicRuntimeConfig: publicConfig } = getConfig();
 
-export default function Agent({ uuid, socket, mtToken }) {
+export default function Agent({ uuid, socket, mtToken, removeAgent }) {
   const [openMetric, setOpenMetric] = useState(false);
   const [disconnected, setDisconnected] = useState(false);
   const [agent, setAgent] = useState({
@@ -68,6 +68,7 @@ export default function Agent({ uuid, socket, mtToken }) {
       }));
 
       setDisconnected(true);
+      removeAgent(payload.agent.uuid);
     }
   });
   return (

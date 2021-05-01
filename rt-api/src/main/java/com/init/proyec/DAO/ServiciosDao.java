@@ -76,7 +76,7 @@ public class ServiciosDao implements DAO<Agents>, DAO2<Agent>, DAO3<Metrics>, DA
 	@Override
 	public List<Agent> getLis(int id) {
 		
-		String sql = "SELECT uuid FROM agents WHERE user_id = ? ORDER BY created_at DESC";
+		String sql = "SELECT uuid FROM agents WHERE user_id = ?  AND connected = true ORDER BY created_at DESC";
 		return jdbcTemplate.query(sql,rowMapper2, id);
 	}
 
