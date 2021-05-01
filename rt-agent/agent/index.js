@@ -7,17 +7,17 @@ const agent = new RtAgent({
   token: "5yQZwZsLCaW9W3kmKxx7Ac",
 });
 
-agent.addMetric("rss", function getRss() {
-  return Promise.resolve(Math.random());
+agent.addMetric("Temperatura", function getRss() {
+  return Promise.resolve(Math.random() * 4);
 });
 
-agent.addMetric("promiseMetric", function getRandomPromise() {
-  return Promise.resolve(Math.random());
+agent.addMetric("Velocidad", function getRandomPromise() {
+  return Promise.resolve(Math.random() * 2);
 });
 
-agent.addMetric("callbackMetric", function getRandomCallbakc(callback) {
+agent.addMetric("Proximidad", function getRandomCallbakc(callback) {
   setTimeout(() => {
-    callback(null, Math.random());
+    callback(null, Math.random() * 3);
   }, 1000);
 });
 

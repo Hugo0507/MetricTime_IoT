@@ -36,7 +36,6 @@ export default function Agent({ uuid, socket, mtToken }) {
       } catch (error) {
         return;
       }
-
       try {
         const { data: metrics } = await axios.get(
           `${publicConfig.api_url}/api/metrics/${uuid}`
