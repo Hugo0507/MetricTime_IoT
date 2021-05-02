@@ -1,21 +1,21 @@
 const RtAgent = require("../");
 
 const agent = new RtAgent({
-  name: "Robococ",
+  name: "Prueba cohete espacial",
   username: "darcdev",
-  interval: 1000,
+  interval: 2000,
   token: "5yQZwZsLCaW9W3kmKxx7Ac",
 });
 
-agent.addMetric("Distancia", function getRss() {
+agent.addMetric("Temperatura", function getRss() {
   return Promise.resolve(Math.random() * 4);
 });
 
-agent.addMetric("Fuerza", function getRandomPromise() {
+agent.addMetric("Velocidad", function getRandomPromise() {
   return Promise.resolve(Math.random() * 2);
 });
 
-agent.addMetric("Proximidad", function getRandomCallbakc(callback) {
+agent.addMetric("Altura", function getRandomCallbakc(callback) {
   setTimeout(() => {
     callback(null, Math.random() * 3);
   }, 1000);

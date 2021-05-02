@@ -56,6 +56,10 @@ public class Controlador {
         return dao2.getLis(id);
     }
 	
+	@RequestMapping(value="/history/agents/{id}", method = RequestMethod.GET)
+	public List<Agent> listHistory(@PathVariable int id) {
+        return dao2.getListHistory(id);
+    }
 	@RequestMapping(value="/metrics/{uuid}", method = RequestMethod.GET)
 	public List<Metrics> listtype(@PathVariable String uuid) {
         return dao3.gettype(uuid);

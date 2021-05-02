@@ -26,21 +26,11 @@ export default function Dashboard() {
         <div className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="flex justify-center	">
             <h2 className="font-mono font-bold text-xl sm:text-2xl">
-              <svg
-                className="w-8 inline-block text-blue-600 	 "
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>{" "}
-              Agentes Recientes
+              <img
+                className="w-10 inline-block text-blue-600"
+                src="https://img.icons8.com/cotton/64/000000/wifi--v1.png"
+              />{" "}
+              Agentes Conectados
             </h2>
           </div>
 

@@ -43,6 +43,15 @@ public class ServiciosDao implements DAO<Agents>, DAO2<Agent>, DAO3<Metrics>, DA
         return agente;
     };
     
+    RowMapper<Agent> rowMapper5 = (rs, rowNum) -> {
+        Agent agente = new Agent();
+        agente.setUuid(rs.getString("uuid"));
+        agente.setName(rs.getString("name"));
+        agente.setPid(rs.getInt("pid"));
+        agente.setHostname(rs.getString("hostname"));
+        return agente;
+    };
+    
     RowMapper<Metrics> rowMapper3 = (rs, rowNum) -> {
         Metrics metricas = new Metrics();
         metricas.setType(rs.getString("type"));
@@ -78,6 +87,13 @@ public class ServiciosDao implements DAO<Agents>, DAO2<Agent>, DAO3<Metrics>, DA
 		
 		String sql = "SELECT uuid FROM agents WHERE user_id = ?  AND connected = true ORDER BY created_at DESC";
 		return jdbcTemplate.query(sql,rowMapper2, id);
+	}
+
+	@Override
+	public List<Agent> getListHistory(int id) {
+		
+		String sql = "SELECT uuid ,name , pid, hostname FROM agents WHERE user_id = ?  AND connected = false ORDER BY created_at DESC";
+		return jdbcTemplate.query(sql,rowMapper5, id);
 	}
 
 	@Override

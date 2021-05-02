@@ -120,4 +120,11 @@ class RtAgent extends EventEmitter {
   }
 }
 
+// function handleFatalError(err) {
+//   process.exit(1);
+// }
+
+// process.on("uncaughtException", handleFatalError);
+// process.on("unhandledRejection", handleFatalError);
+
 module.exports = RtAgent;

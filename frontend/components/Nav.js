@@ -38,7 +38,11 @@ export default function Nav() {
                     Dashboard
                   </a>
                 </Link>
-
+                <Link href="/historial">
+                  <a className="bg-black text-white px-3 py-2 rounded-md text-sm font-medium">
+                    Historial
+                  </a>
+                </Link>
                 <a
                   href="#"
                   className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"

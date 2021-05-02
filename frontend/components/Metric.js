@@ -11,7 +11,6 @@ export default function Metric({ disconnected, uuid, socket, type, mtToken }) {
 
   useEffect(() => {
     async function fetchMetrics() {
-      console.log("sssss");
       try {
         const { data: dataResult } = await axios.get(
           `${publicConfig.api_url}/api/metrics/${uuid}/${type}`
@@ -37,31 +36,33 @@ export default function Metric({ disconnected, uuid, socket, type, mtToken }) {
     }
     fetchMetrics();
 
-    socket.on("agent/message", (payload) => {
-      if (payload.token !== mtToken) return;
+    if (socket) {
+      socket.on("agent/message", (payload) => {
+        if (payload.token !== mtToken) return;
 
-      if (payload.agent.uuid === uuid) {
-        const metric = payload.metrics.find((m) => m.type === type);
+        if (payload.agent.uuid === uuid) {
+          const metric = payload.metrics.find((m) => m.type === type);
 
-        if (!graphReference.current) return;
+          if (!graphReference.current) return;
 
-        const chart = graphReference.current;
-        const data = chart.data.datasets[0].data;
-        const labels = chart.data.labels;
+          const chart = graphReference.current;
+          const data = chart.data.datasets[0].data;
+          const labels = chart.data.labels;
 
-        if (data.length >= 20) {
-          labels.shift();
-          data.shift();
+          if (data.length >= 20) {
+            labels.shift();
+            data.shift();
+          }
+
+          const labelM = format(metric.createdat, "HH:mm:ss");
+          const dataM = metric.value;
+          labels.push(labelM);
+          data.push(dataM);
+
+          chart.update("active");
         }
-
-        const labelM = format(metric.createdat, "HH:mm:ss");
-        const dataM = metric.value;
-        labels.push(labelM);
-        data.push(dataM);
-
-        chart.update("active");
-      }
-    });
+      });
+    }
   }, [disconnected]);
 
   return (
