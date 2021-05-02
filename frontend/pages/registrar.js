@@ -1,6 +1,22 @@
+import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-export default function Login() {
+import HoneyPot from "../components/HoneyPot";
+
+export default function Register() {
+  const [isRobot, setIsRobot] = useState(false);
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    const form = new FormData(evt.target);
+
+    if (form.get("verify") === "on") {
+      setIsRobot(true);
+      return;
+    } else {
+      setIsRobot(false);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -29,7 +45,7 @@ export default function Login() {
               </Link>
             </p>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="rounded-md shadow-sm -space-y-px">
               <div className="mb-4">
                 <label for="nickname" className="sr-only">
@@ -87,33 +103,35 @@ export default function Login() {
                   placeholder="Repetir Contraseña"
                 />
               </div>
+              <HoneyPot />
             </div>
+            {isRobot && (
+              <div className="text-center text-red-500		">
+                No se puede enviar el formulario , no es un humano
+              </div>
+            )}
             <div>
-              <Link href="/dashboard">
-                <a>
-                  <button
-                    type="submit"
-                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              <button
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <svg
+                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
                   >
-                    <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                      <svg
-                        className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    Registrarse
-                  </button>
-                </a>
-              </Link>
+                    <path
+                      fill-rule="evenodd"
+                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Registrarse
+              </button>
             </div>
           </form>
         </div>

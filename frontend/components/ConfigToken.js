@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export default function ConfigToken() {
   return (
     <div className="mt-10 sm:mt-0">
@@ -38,7 +40,8 @@ export default function ConfigToken() {
                       id="first_name"
                       disabled
                       autoComplete="given-name"
-                      className="mt-1 mb-2 focus:ring-indigo-500  h-8 border-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      value="5yQZwZsLCaW9W3kmKxx7Ac"
+                      className="p-4 mt-1 mb-2 focus:ring-indigo-500  h-8 border-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
 
                     <button

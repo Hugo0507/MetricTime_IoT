@@ -1,7 +1,7 @@
 const RtAgent = require("../");
 
 const agent = new RtAgent({
-  name: "Prueba cohete espacial",
+  name: "Prueba cohete espººacial",
   username: "darcdev",
   interval: 2000,
   token: "5yQZwZsLCaW9W3kmKxx7Ac",

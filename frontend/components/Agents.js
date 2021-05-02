@@ -43,14 +43,14 @@ export default function Agents({ socket, mtToken }) {
           {agents.length === 0 && (
             <div className="p-14 md:p-20 w-full flex flex-col items-center justify-center	">
               <img
-                className="w-24 md:w-30"
+                className="w-16 md:w-18"
                 src="https://img.icons8.com/fluent/96/000000/wi-fi-disconnected.png"
               />
               <h5 className="text-center mt-6 font-bold	text-lg">
                 No hay agentes conectados
               </h5>
               <h5 className="text-center mt-6 font-bold	text-lg	">
-                Envia Metricas desde un dispositivo electronico
+                Envie Metricas desde un dispositivo electronico
               </h5>
             </div>
           )}

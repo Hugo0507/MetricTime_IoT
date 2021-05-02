@@ -43,12 +43,11 @@ export default function Nav() {
                     Historial
                   </a>
                 </Link>
-                <a
-                  href="#"
-                  className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Instrucciones
-                </a>
+                <Link href="/instrucciones">
+                  <a className="bg-black text-white px-3 py-2 rounded-md text-sm font-medium">
+                    Instrucciones
+                  </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -99,7 +98,7 @@ export default function Nav() {
                         Tu Perfil
                       </a>
                     </Link>
-                    <Link href="/perfil">
+                    <Link href="/configuracion">
                       <a
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         role="menuitem"
@@ -128,7 +127,7 @@ export default function Nav() {
                       </a>
                     </Link>
 
-                    <Link href="/">
+                    <Link href="/iniciar-sesion">
                       <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -206,11 +205,8 @@ export default function Nav() {
                 Dashboard
               </a>
             </Link>
-            <Link href="#">
-              <a
-                href="#"
-                className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
+            <Link href="/instrucciones">
+              <a className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">
                 Instrucciones
               </a>
             </Link>
@@ -235,19 +231,16 @@ export default function Nav() {
             </div>
             <div className="mt-3 px-2 space-y-1">
               <Link href="/perfil">
-                <a
-                  href="#"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
-                >
+                <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
                   Tu Perfil
                 </a>
               </Link>
-              <Link href="/perfil">
+              <Link href="/configuracion">
                 <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
                   Configuraciones
                 </a>
               </Link>
-              <Link href="/">
+              <Link href="/iniciar-sesion">
                 <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
                   Cerrar Sesión
                 </a>
