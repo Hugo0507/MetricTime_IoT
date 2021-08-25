@@ -1,6 +1,19 @@
 import { useState } from "react";
+import axios from "axios";
 
 export default function ConfigToken() {
+  const [token, setToken] = useState("5yQZwZsLCaW9W3kmKxx7Ac");
+
+  const generateToken = async () => {
+    //const { data } = await axios.post(
+    //   `${publicConfig.api_url}/api/user/token` ,{
+    //     token
+    //   }
+    // );
+    const data = { token: "59494949" };
+    setToken(data.token);
+  };
+
   return (
     <div className="mt-10 sm:mt-0">
       <div className="md:grid md:grid-cols-3 md:gap-6">
@@ -23,7 +36,7 @@ export default function ConfigToken() {
           </div>
         </div>
         <div className="mt-5 md:mt-0 md:col-span-2">
-          <form action="#" method="POST">
+          <form>
             <div className="shadow overflow-hidden sm:rounded-md">
               <div className="px-4 py-5 bg-white sm:p-6">
                 <div className="grid grid-cols-6 gap-6">
@@ -40,12 +53,16 @@ export default function ConfigToken() {
                       id="first_name"
                       disabled
                       autoComplete="given-name"
-                      value="5yQZwZsLCaW9W3kmKxx7Ac"
+                      value={token}
+                      onChange={(evt) => {
+                        setToken(evt.target.value);
+                      }}
                       className="p-4 mt-1 mb-2 focus:ring-indigo-500  h-8 border-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
 
                     <button
-                      type="submit"
+                      onClick={generateToken}
+                      type="button"
                       className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       Generar Token

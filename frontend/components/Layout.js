@@ -17,13 +17,10 @@ export default function Layout({ children, title, notHeader, notNav }) {
           y seguimiento de su respectivo comportamiento mediante gráficas
           presentadas en tiempo real"
         />
+        <meta name="keywords" content="monitoreo metricas , control metricas" />
 
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          name="keywords"
-          content="monitoreo metricas , control metricas , "
-        />
       </Head>
       <div className="h-full pb-4">
         {!notNav && <Nav />}

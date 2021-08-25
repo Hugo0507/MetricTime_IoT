@@ -2,11 +2,31 @@ import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import HoneyPot from "../components/HoneyPot";
+import Error from "../components/Error";
+import { useRouter } from "next/router";
 
 export default function Register() {
+  const router = useRouter();
   const [isRobot, setIsRobot] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorLogin, setErrorLogin] = useState("");
+  const [userData, setUserData] = useState({
+    nickname: "",
+    email: "",
+    password: "",
+    repeatPassword: "",
+  });
+
+  const handleChange = (evt) => {
+    setUserData({
+      ...userData,
+      [evt.target.name]: evt.target.value,
+    });
+  };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
     const form = new FormData(evt.target);
 
     if (form.get("verify") === "on") {
@@ -15,6 +35,27 @@ export default function Register() {
     } else {
       setIsRobot(false);
     }
+    const userValues = Object.values(userData);
+
+    if (userValues.includes("")) {
+      setIsError(true);
+      setErrorLogin("Todos Los campos son obligatorios");
+      return;
+    }
+    // const { data: user } = await axios.post(
+    //   `${publicConfig.api_url}/api/register` , userData
+    // );
+
+    const message = "sss";
+
+    if (!message) {
+      setIsError(true);
+      setErrorLogin("Ocurrio un error en el registro");
+      return;
+    }
+    setIsError(false);
+    setErrorLogin("");
+    router.push("/dashboard");
   };
 
   return (
@@ -37,7 +78,7 @@ export default function Register() {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               O
-              <Link href="/">
+              <Link href="/iniciar-sesion">
                 <a className="font-medium text-indigo-600 hover:text-indigo-500">
                   {" "}
                   Iniciar Sesión
@@ -45,6 +86,7 @@ export default function Register() {
               </Link>
             </p>
           </div>
+          {isError && <Error message={errorLogin} />}
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="rounded-md shadow-sm -space-y-px">
               <div className="mb-4">
@@ -55,9 +97,9 @@ export default function Register() {
                   id="nickname"
                   name="nickname"
                   type="text"
-                  required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Nickname"
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -69,9 +111,9 @@ export default function Register() {
                   name="email"
                   type="email"
                   autocomplete="email"
-                  required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -85,9 +127,9 @@ export default function Register() {
                   name="password"
                   type="password"
                   autocomplete="current-password"
-                  required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Contraseña"
+                  onChange={handleChange}
                 />
               </div>
               <div className="mb-4">
@@ -96,11 +138,11 @@ export default function Register() {
                 </label>
                 <input
                   id="confirm-password"
-                  name="confirm-password"
+                  name="repeatPassword"
                   type="password"
-                  required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Repetir Contraseña"
+                  onChange={handleChange}
                 />
               </div>
               <HoneyPot />

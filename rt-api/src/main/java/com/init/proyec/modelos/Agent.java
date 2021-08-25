@@ -1,46 +1,79 @@
 package com.init.proyec.modelos;
 
-public class Agent {
-
-	private String uuid;
-	private String name;
-	private Integer pid;
-	private String hostname;
-
-	public Agent() {
+public class Agents {
 	
+	private int id;
+	private String name;
+	private String hostname;
+	private boolean connected;
+	private int pid;
+	
+	public Agents() {
+
 	}
-	public Agent( String uuid , String name , Integer pid , String hostname) {
+
+	public Agents(int id, String name, String hostname, boolean connected, int pid) {
 		super();
-		this.uuid = uuid;
-	    this.name = name;
-	    this.pid = pid;
+		this.id = id;
+		this.name = name;
+		this.hostname = hostname;
+		this.connected = connected;
+		this.pid = pid;
 	}
-	public String getUuid() {
-		return uuid;
+
+
+	public int getId() {
+		return id;
 	}
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
+
+
 	public String getName() {
-		return this.name;
+		return name;
 	}
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getPid() {
-		return this.pid;
-	}
-	public void setPid(Integer pid) {
-		this.pid = pid;
-	}
-	
+
+
 	public String getHostname() {
-		return this.hostname;
+		return hostname;
 	}
+
+
 	public void setHostname(String hostname) {
 		this.hostname = hostname;
 	}
+
+
+	public boolean isConnected() {
+		return connected;
+	}
+
+
+	public void setConnected(boolean connected) {
+		this.connected = connected;
+	}
+
+
+	public int getPid() {
+		return pid;
+	}
+
+
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+
+
+	
+	
 	
 	
 

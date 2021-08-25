@@ -1,4 +1,32 @@
+import { useState } from "react";
+
 export default function InfoProfile() {
+  const [userData, setUserData] = useState({
+    nickname: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (evt) => {
+    setUserData({
+      ...userData,
+      [evt.target.name]: evt.target.value,
+    });
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    //const { data } = await axios.post(
+    //   `${publicConfig.api_url}/api/user/info` , userData
+    // );
+
+    setUserData({
+      email: "diego3000@gmail.com",
+      nickname: "hola",
+      password: "4444",
+    });
+  };
   return (
     <div className="mt-10 sm:mt-0">
       <div className="md:grid md:grid-cols-3 md:gap-6">
@@ -31,51 +59,54 @@ export default function InfoProfile() {
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      htmlFor="first_name"
+                      htmlFor="nickname"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Nombre
                     </label>
                     <input
                       type="text"
-                      name="first_name"
-                      id="first_name"
-                      autoComplete="given-name"
-                      value="darcdev"
+                      name="nickname"
+                      id="nickname"
+                      autoComplete="nickname"
+                      value={userData.nickname}
+                      onChange={handleChange}
                       className="p-4 mt-1 focus:ring-indigo-500  h-8 border-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      htmlFor="last_name"
+                      htmlFor="password"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Password
                     </label>
                     <input
                       type="password"
-                      name="last_name"
-                      id="last_name"
-                      autoComplete="family-name"
-                      value="darcdev"
+                      name="password"
+                      id="password"
+                      autoComplete="password"
+                      value={userData.password}
+                      onChange={handleChange}
                       className="p-4 mt-1 focus:ring-indigo-500 h-8 border-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
 
                   <div className="col-span-6 sm:col-span-4">
                     <label
-                      htmlFor="email_address"
+                      htmlFor="email"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Email address
                     </label>
                     <input
                       type="text"
-                      name="email_address"
-                      id="email_address"
+                      name="email"
+                      id="email"
                       autoComplete="email"
-                      value="diego@gmail.com"
+                      value={userData.email}
+                      onChange={handleChange}
                       className="p-4 mt-1 focus:ring-indigo-500 h-8 border-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
@@ -83,7 +114,8 @@ export default function InfoProfile() {
               </div>
               <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                 <button
-                  type="submit"
+                  onClick={handleSubmit}
+                  type="button"
                   className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Guardar
