@@ -68,7 +68,6 @@ export default function InfoProfile() {
                       type="text"
                       name="nickname"
                       id="nickname"
-                      autoComplete="nickname"
                       value={userData.nickname}
                       onChange={handleChange}
                       className="p-4 mt-1 focus:ring-indigo-500  h-8 border-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -86,7 +85,6 @@ export default function InfoProfile() {
                       type="password"
                       name="password"
                       id="password"
-                      autoComplete="password"
                       value={userData.password}
                       onChange={handleChange}
                       className="p-4 mt-1 focus:ring-indigo-500 h-8 border-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -104,7 +102,6 @@ export default function InfoProfile() {
                       type="text"
                       name="email"
                       id="email"
-                      autoComplete="email"
                       value={userData.email}
                       onChange={handleChange}
                       className="p-4 mt-1 focus:ring-indigo-500 h-8 border-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"

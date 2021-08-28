@@ -75,7 +75,7 @@ export default function Agent({ uuid, socket, mtToken, removeAgent }) {
       className="p-2 sm:p-2 md:p-5 bg-gray-100 mb-2 font-	
   "
     >
-      <div className="flex justify-between" id="titulo">
+      <div className="flex justify-between">
         <h3>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +132,7 @@ export default function Agent({ uuid, socket, mtToken, removeAgent }) {
       <p className="p-1 text-sm sm:text-lg"> {agent.hostname}</p>
       <button
         onClick={toggleMetric}
-        className="text-sm sm:text-lg text-red-600 p-1"
+        className="text-sm sm:text-lg text-blue-900 p-1"
       >
         Ver Metricas{" "}
         {openMetric ? (
@@ -183,7 +183,7 @@ export default function Agent({ uuid, socket, mtToken, removeAgent }) {
                     clipRule="evenodd"
                   />
                 </svg>{" "}
-                {metric.type}
+                <button>{metric.type}</button>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"

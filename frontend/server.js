@@ -22,7 +22,7 @@ nextApp.prepare().then(() => {
     // dejamos que el manejador de Next se encargue y responda con el HTML o un 404
     return nextHandler(req, res);
   });
-  // iniciamos el servidor HTTP en el puerto 3000
+  // iniciamos el servidor HTTP en el puerto 4000
   server = app.listen(4000, (err) => {
     // si ocurre un error matamos el proceso
     if (err) process.exit(0);

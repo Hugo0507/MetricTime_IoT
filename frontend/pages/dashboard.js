@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import Agents from "../components/Agents";
 import Layout from "../components/Layout";
+import { useRouter } from "next/router";
 import io from "socket.io-client";
 
 export default function Dashboard() {
+  const router = useRouter();
   const [socket, setSocket] = useState(null);
   const [mtToken, setMtToken] = useState(null);
-
   useEffect(() => {
+    if (!localStorage.getItem("metrictimeUser")) {
+      router.push("/iniciar-sesion");
+      return;
+    }
+
     const socket = io();
     socket.open();
     setSocket(socket);
@@ -27,6 +33,7 @@ export default function Dashboard() {
           <div className="flex justify-center	">
             <h2 className="font-mono font-bold text-xl sm:text-2xl">
               <img
+                alt="wifi icon"
                 className="w-10 inline-block text-blue-600"
                 src="https://img.icons8.com/cotton/64/000000/wifi--v1.png"
               />{" "}

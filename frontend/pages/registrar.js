@@ -1,9 +1,10 @@
 import { useState } from "react";
-import Head from "next/head";
 import Link from "next/link";
+import Layout from "../components/Layout";
 import HoneyPot from "../components/HoneyPot";
 import Error from "../components/Error";
 import { useRouter } from "next/router";
+import randomstring from "randomstring";
 
 export default function Register() {
   const router = useRouter();
@@ -42,6 +43,8 @@ export default function Register() {
       setErrorLogin("Todos Los campos son obligatorios");
       return;
     }
+
+    const newToken = randomstring.generate(16);
     // const { data: user } = await axios.post(
     //   `${publicConfig.api_url}/api/register` , userData
     // );
@@ -55,27 +58,23 @@ export default function Register() {
     }
     setIsError(false);
     setErrorLogin("");
-    router.push("/dashboard");
+    router.push("/iniciar-sesion");
   };
 
   return (
-    <>
-      <Head>
-        <title>Registrar - MetricTime</title>
-        <link rel="shortcut icon" href="/images/logo.ico" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <Layout title={"Registrar"} notHeader={true} notNav={true}>
+      <main className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
             <img
               className="mx-auto w-30 h-30"
               src="/images/logo.png"
               alt="Workflow"
+              alt="icono logo"
             />
-            <h2 className="text-center text-3xl font-extrabold text-gray-900">
+            <h1 className="text-center text-3xl font-extrabold text-gray-900">
               Registrarse
-            </h2>
+            </h1>
             <p className="mt-2 text-center text-sm text-gray-600">
               O
               <Link href="/iniciar-sesion">
@@ -177,7 +176,7 @@ export default function Register() {
             </div>
           </form>
         </div>
-      </div>
-    </>
+      </main>
+    </Layout>
   );
 }

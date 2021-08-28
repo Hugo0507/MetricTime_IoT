@@ -1,10 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
+import randomstring from "randomstring";
 
 export default function ConfigToken() {
-  const [token, setToken] = useState("5yQZwZsLCaW9W3kmKxx7Ac");
+  let dataUser = {};
+  if (typeof window !== "undefined") {
+    localStorage.getItem("metrictimeUser");
+    // all other localStorage must be wrapped with this is if statement check
+  }
+  const [token, setToken] = useState(
+    dataUser.token || "5yQZwZsLCaW9W3kmKxx7Ac"
+  );
 
   const generateToken = async () => {
+    const newToken = randomstring.generate(16);
     //const { data } = await axios.post(
     //   `${publicConfig.api_url}/api/user/token` ,{
     //     token
@@ -15,7 +24,7 @@ export default function ConfigToken() {
   };
 
   return (
-    <div className="mt-10 sm:mt-0">
+    <main className="mt-10 sm:mt-0">
       <div className="md:grid md:grid-cols-3 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">
@@ -52,7 +61,6 @@ export default function ConfigToken() {
                       name="first_name"
                       id="first_name"
                       disabled
-                      autoComplete="given-name"
                       value={token}
                       onChange={(evt) => {
                         setToken(evt.target.value);
@@ -75,6 +83,6 @@ export default function ConfigToken() {
           </form>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

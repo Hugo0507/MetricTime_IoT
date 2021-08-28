@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { Html } from "next/document";
 import Nav from "./Nav";
 import Header from "./Header";
 import Footer from "./Footer";

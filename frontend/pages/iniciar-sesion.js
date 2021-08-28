@@ -44,22 +44,23 @@ export default function Login() {
     }
     setIsError(false);
     setErrorLogin("");
+    localStorage.setItem("metrictimeUser", JSON.stringify(user));
     router.push("/dashboard");
   };
   return (
     <>
       <Layout title={"Login"} notHeader={true} notNav={true}>
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <main className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-md w-full space-y-8">
             <div>
               <img
                 className="mx-auto w-24 h-22 sm:w-30 sm:h-30"
                 src="/images/logo.png"
-                alt="Workflow"
+                alt="icono logo"
               />
-              <h2 className="text-center text-3xl font-extrabold text-gray-900">
+              <h1 className="text-center text-3xl font-extrabold text-gray-900">
                 Iniciar Sesión
-              </h2>
+              </h1>
               <p className="mt-2 text-center text-sm text-gray-600">
                 O
                 <Link href="/registrar">
@@ -128,7 +129,7 @@ export default function Login() {
               </div>
             </form>
           </div>
-        </div>
+        </main>
       </Layout>
     </>
   );

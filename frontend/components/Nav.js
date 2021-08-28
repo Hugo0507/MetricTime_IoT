@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Nav() {
+  const router = useRouter();
   const [toggleMenuProfile, setToggleMenuProfile] = useState(false);
 
   const handleMenuProfile = () => {
@@ -13,6 +15,12 @@ export default function Nav() {
   const handleOpenMenu = () => {
     setOpenMenu(!openMenu);
   };
+
+  const onClose = (evt) => {
+    evt.preventDefault();
+    localStorage.removeItem("metrictimeUser");
+    router.push("/iniciar-sesion");
+  };
   return (
     <nav className="bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,6 +29,7 @@ export default function Nav() {
             <Link href="/dashboard" className="flex-shrink-0">
               <a className="flex items-center">
                 <img
+                  alt="icon logo"
                   className="sm:h-18 h-14 w-16 sm:w-20"
                   src="/images/logo.png"
                   alt="Workflow"
@@ -62,9 +71,9 @@ export default function Nav() {
                   >
                     <span className="sr-only">Open user menu</span>
                     <img
+                      alt="photo icon"
                       className="h-8 w-8 rounded-full"
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
                     />
                   </button>
                 </div>
@@ -128,7 +137,10 @@ export default function Nav() {
                     </Link>
 
                     <Link href="/iniciar-sesion">
-                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      <a
+                        onClick={onClose}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -216,8 +228,8 @@ export default function Nav() {
               <div className="flex-shrink-0">
                 <img
                   className="h-10 w-10 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
+                  src="https://gravatar.com/avatar/6f2ad6cec5c2112836252ec84c8d1216?s=400&d=robohash&r=x"
+                  alt="icon menu"
                 />
               </div>
               <div className="ml-3">
@@ -241,7 +253,10 @@ export default function Nav() {
                 </a>
               </Link>
               <Link href="/iniciar-sesion">
-                <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">
+                <a
+                  onClick={onClose}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                >
                   Cerrar Sesión
                 </a>
               </Link>
