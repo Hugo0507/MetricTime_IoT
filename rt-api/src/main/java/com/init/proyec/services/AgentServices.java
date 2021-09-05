@@ -1,4 +1,4 @@
-package com.init.proyec.DAO;
+package com.init.proyec.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,108 +10,94 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.init.proyec.modelos.Agent;
-import com.init.proyec.modelos.Agents;
-import com.init.proyec.modelos.Metrics;
-import com.init.proyec.modelos.Metrics2;
+import com.init.proyec.DAO.AgentDao;
+import com.init.proyec.entity.Agent;
 
-
+/**
+ * Se encarga de implementar todas las acciones llamadas desde el controlador
+ * @author metricTime
+ *
+ */
 @Component
-public class ServiciosDao implements DAO<Agents>, DAO2<Agent>, DAO3<Metrics>, DAO4<Metrics2>{
+public class AgentServices implements AgentDao<Agent>{
 	
-	private static final Logger log = LoggerFactory.getLogger(ServiciosDao.class);
+	private static final Logger log = LoggerFactory.getLogger(AgentServices.class);
 	JdbcTemplate jdbcTemplate;
 	
-
-	public ServiciosDao(JdbcTemplate jdbcTemplate) {
+    /**
+     * Conectar con jdbc
+     * @param jdbcTemplate
+     */
+	public AgentServices(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-	
-	RowMapper<Agents> rowMapper = (rs, rowNum) -> {
-        Agents agente = new Agents();
-        agente.setId(rs.getInt("id"));
-        agente.setName(rs.getString("name"));
-        agente.setHostname(rs.getString("hostname"));
-        agente.setConnected(rs.getBoolean("Connected"));
-        agente.setPid(rs.getInt("pid"));
-        return agente;
-    };
-    
-    RowMapper<Agent> rowMapper2 = (rs, rowNum) -> {
-        Agent agente = new Agent();
-        agente.setUuid(rs.getString("uuid"));
-        return agente;
-    };
-    
-    RowMapper<Agent> rowMapper5 = (rs, rowNum) -> {
-        Agent agente = new Agent();
-        agente.setUuid(rs.getString("uuid"));
-        agente.setName(rs.getString("name"));
-        agente.setPid(rs.getInt("pid"));
-        agente.setHostname(rs.getString("hostname"));
-        return agente;
-    };
-    
-    RowMapper<Metrics> rowMapper3 = (rs, rowNum) -> {
-        Metrics metricas = new Metrics();
-        metricas.setType(rs.getString("type"));
-        return metricas;
-    };
-    
-    RowMapper<Metrics2> rowMapper4 = (rs, rowNum) -> {
-        Metrics2 metricas2 = new Metrics2();
-        metricas2.setId(rs.getInt("id"));
-        metricas2.setType(rs.getString("type"));
-        metricas2.setValue(rs.getDouble("value"));
-        metricas2.setCreatedat(rs.getTimestamp("created_at"));
-        return metricas2;
-    };
-
-
-
-	@Override
-	public Optional<Agents> get(String uuid) {
+    /**
+     * Implementar metodo de obtener Agente
+     */
+	/*@Override
+	public Optional<Agent> getAgent(String uuid) {
 		 String sql = "SELECT id, name, hostname, connected, pid FROM agents WHERE uuid LIKE ?";
-	        Agents agente = null;
+	        Agent agente = null;
 	        try {
-	        	agente = jdbcTemplate.queryForObject(sql,rowMapper,uuid);
+	        	agente = jdbcTemplate.queryForObject(sql,agentMapper,uuid);
 	        }catch (DataAccessException ex) {
 	            log.info("UUID no encontrada: "+ uuid );
 	        }
 	        return Optional.ofNullable(agente);
-	}
-
-
+	}*/
+	
 	@Override
-	public List<Agent> getLis(int id) {
+	public List<Agent> getAgents(String uuid) {
+		
+		String sql = "SELECT id, name, hostname, connected, pid FROM agents WHERE uuid LIKE ?";
+		return jdbcTemplate.query(sql,agentMapper, uuid);
+	}
+	
+    /**
+     * Implementar metodo de obtener agentes conectados por usuario
+     */
+	@Override
+	public List<Agent> getAgentsConnected(int id) {
 		
 		String sql = "SELECT uuid FROM agents WHERE user_id = ?  AND connected = true ORDER BY created_at DESC";
-		return jdbcTemplate.query(sql,rowMapper2, id);
+		return jdbcTemplate.query(sql,uuidMapper, id);
 	}
-
+    /**
+     * Implementar metodo de obtener historial de agentes por usuario
+     */
 	@Override
-	public List<Agent> getListHistory(int id) {
+	public List<Agent> getHistoryAgents(int id) {
 		
 		String sql = "SELECT uuid ,name , pid, hostname FROM agents WHERE user_id = ?  AND connected = false ORDER BY created_at DESC";
-		return jdbcTemplate.query(sql,rowMapper5, id);
+		return jdbcTemplate.query(sql,semiagentMapper, id);
 	}
-
-	@Override
-	public List<Metrics> gettype(String uuid) {
-		String sql = "SELECT type FROM metrics JOIN agents ON agents.id = metrics.agent_id WHERE agents.uuid LIKE ? GROUP BY type";
-		return jdbcTemplate.query(sql, rowMapper3, uuid);
-	}
-
-
-	@Override
-	public List<Metrics2> getmetricas(String uuid, String type) {
-		String sql = "SELECT * FROM (SELECT metrics.id, type , value , metrics.created_at FROM metrics INNER JOIN agents ON  metrics.agent_id = agents.id WHERE agents.uuid LIKE ? and  metrics.type LIKE ? ORDER BY metrics.created_at DESC) as metric_filter LIMIT 20";
-		return jdbcTemplate.query(sql, rowMapper4, new Object[]{uuid, type});
-	}
-
+   
 
 	
-	
-	
+	RowMapper<Agent> agentMapper = (rs, rowNum) -> {
+        Agent agent = new Agent();
+        agent.setId(rs.getInt("id"));
+        agent.setName(rs.getString("name"));
+        agent.setHostname(rs.getString("hostname"));
+        agent.setConnected(rs.getBoolean("Connected"));
+        agent.setPid(rs.getInt("pid"));
+        return agent;
+    };
+    
+    RowMapper<Agent> uuidMapper = (rs, rowNum) -> {
+        Agent agent = new Agent();
+        agent.setUuid(rs.getString("uuid"));
+        return agent;
+    };
+    
+    RowMapper<Agent> semiagentMapper = (rs, rowNum) -> {
+        Agent agent = new Agent();
+        agent.setUuid(rs.getString("uuid"));
+        agent.setName(rs.getString("name"));
+        agent.setPid(rs.getInt("pid"));
+        agent.setHostname(rs.getString("hostname"));
+        return agent;
+    };
+
 
 }

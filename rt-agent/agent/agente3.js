@@ -4,7 +4,7 @@ const agent = new RtAgent({
   name: "Perro Bot",
   username: "darcdev",
   interval: 5000,
-  token: "5yQZwZsLCaW9W3kmKxx7Ac",
+  token: "dViI8dL7ixbdrx0m",
 });
 
 agent.addMetric("Temperatura", function getRss() {

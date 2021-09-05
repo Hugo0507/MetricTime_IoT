@@ -1,9 +1,8 @@
-package com.init.proyec;
+package com.init.proyec.controller;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,65 +11,58 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.init.proyec.DAO.DAO;
-import com.init.proyec.DAO.DAO2;
-import com.init.proyec.DAO.DAO3;
-import com.init.proyec.DAO.DAO4;
-import com.init.proyec.DAO.ServiciosDao;
-import com.init.proyec.modelos.Agent;
-import com.init.proyec.modelos.Agents;
-import com.init.proyec.modelos.Metrics;
-import com.init.proyec.modelos.Metrics2;
+import com.init.proyec.DAO.AgentDao;
+import com.init.proyec.entity.Agent;
 
+/**
+ * Controla las peticiones del cliente y ejecuta las operaciones demandadas
+ * @author metricTime
+ * 
+ */
 @RestController
-@CrossOrigin(origins = "http://localhost:4000")
-public class Controlador {
-	private DAO<Agents> dao;
-	private DAO2<Agent> dao2;
-	private DAO3<Metrics> dao3;
-	private DAO4<Metrics2> dao4;
+@CrossOrigin(origins = "*")
 
+public class AgentController {
 
-	public Controlador(DAO<Agents> dao, DAO2<Agent> dao2, DAO3<Metrics> dao3, DAO4<Metrics2> dao4) {
+	private AgentDao<Agent> agentDAO;
+
+    /**
+     * 
+     * @param agentDAO 
+     * @param agentsDAO
+     */
+	public AgentController(AgentDao<Agent> agentDAO) {
 		super();
-		this.dao = dao;
-		this.dao2 = dao2;
-		this.dao3 = dao3;
-		this.dao4 = dao4;
+		this.agentDAO = agentDAO;
 	}
 
-	@Autowired
-	ServiciosDao servicioDao;
-	
+	/***
+	 * 
+	 * @param uuid
+	 * @return
+	 */
 	@RequestMapping(value="/agent/{uuid}", method = RequestMethod.GET)
-    public Agents getAgente(@PathVariable String uuid) {
-        Optional<Agents> agente = dao.get(uuid);
-        if(!agente.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Persona no encontrada.");
-        }
-        return agente.get();
+    public List<Agent> getAgente(@PathVariable String uuid) {
+        return agentDAO.getAgents(uuid);
     }
-	
+	/***
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value="/agents/{id}", method = RequestMethod.GET)
-	public List<Agent> list(@PathVariable int id) {
-        return dao2.getLis(id);
+	public List<Agent> listUserAgents(@PathVariable int id) {
+		System.out.println(id);
+        return agentDAO.getAgentsConnected(id);
     }
-	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value="/history/agents/{id}", method = RequestMethod.GET)
-	public List<Agent> listHistory(@PathVariable int id) {
-        return dao2.getListHistory(id);
+	public List<Agent> listUserAgentHistory(@PathVariable int id) {
+        return agentDAO.getHistoryAgents(id);
     }
-	@RequestMapping(value="/metrics/{uuid}", method = RequestMethod.GET)
-	public List<Metrics> listtype(@PathVariable String uuid) {
-        return dao3.gettype(uuid);
-    }
-	@RequestMapping(value="/metrics/{uuid}/{type}", method = RequestMethod.GET)
-	public List<Metrics2> listmetrics(@PathVariable String uuid, @PathVariable String type) {
-        return dao4.getmetricas(uuid, type);
-    }
-	
-	
-	
-	
 
 }

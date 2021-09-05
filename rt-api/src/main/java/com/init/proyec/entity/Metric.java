@@ -1,20 +1,21 @@
-package com.init.proyec.modelos;
+package com.init.proyec.entity;
 
 import java.sql.Timestamp;
 
-public class Metrics2 {
+/**
+ * Modelo de datos de Metrica
+ * @author MetricTime
+ *
+ */
+public class Metric {
 	
 	private int id;
 	private String type;
 	private double value;
 	private Timestamp createdat;
-	
-	
-	
-	public Metrics2() {
-		
-	}
-	public Metrics2(int id, String type, double value, Timestamp createdat) {
+	public Metric() {}
+
+	public Metric(int id, String type, double value, Timestamp createdat) {
 		this.id = id;
 		this.type = type;
 		this.value = value;
@@ -45,6 +46,4 @@ public class Metrics2 {
 		this.createdat = createdat;
 	}
 	
-	
-
 }

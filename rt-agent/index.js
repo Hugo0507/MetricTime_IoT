@@ -13,7 +13,7 @@ const EventEmitter = require("events");
 const options = {
   name: "untitled",
   username: "darcdev",
-  interval: 5000,
+  interval: 1000,
   token: "",
   mqtt: {
     host: "mqtt://localhost",

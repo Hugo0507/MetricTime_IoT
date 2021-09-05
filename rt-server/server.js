@@ -85,8 +85,6 @@ class MQTTServer {
               return handleError(error);
             }
 
-            console.log(`Agent ${agent.uuid} saved`);
-
             if (!this.clients.get(client.id)) {
               this.clients.set(client.id, { ...agent, token: payload.token });
               this.server.publish({

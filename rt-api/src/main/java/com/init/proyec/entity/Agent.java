@@ -1,46 +1,56 @@
-package com.init.proyec.modelos;
+package com.init.proyec.entity;
 
-public class Agents {
+/**
+ * Modelo de datos de Agente
+ * @author MetricTime
+ *
+ */
+public class Agent {
 	
 	private int id;
 	private String name;
 	private String hostname;
 	private boolean connected;
 	private int pid;
+	private String uuid;
 	
-	public Agents() {
+	public Agent() {
 
 	}
 
-	public Agents(int id, String name, String hostname, boolean connected, int pid) {
+	public Agent(int id, String name, String hostname, boolean connected, int pid , String uuid) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.hostname = hostname;
 		this.connected = connected;
 		this.pid = pid;
+		this.uuid = uuid;
 	}
-
 
 	public int getId() {
 		return id;
 	}
 
-
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public String getUuid() {
+		return uuid;
+	}
 
-
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	
 	public String getName() {
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 	public String getHostname() {
 		return hostname;
@@ -56,25 +66,16 @@ public class Agents {
 		return connected;
 	}
 
-
 	public void setConnected(boolean connected) {
 		this.connected = connected;
 	}
-
 
 	public int getPid() {
 		return pid;
 	}
 
-
 	public void setPid(int pid) {
 		this.pid = pid;
 	}
-
-
-	
-	
-	
-	
 
 }

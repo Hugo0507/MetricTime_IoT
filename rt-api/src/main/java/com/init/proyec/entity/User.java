@@ -1,15 +1,24 @@
-package com.init.proyec.modelos;
+package com.init.proyec.entity;
 
-public class Users {
+import java.sql.Date;
+
+/**
+ * Modelo de datos de Usuario
+ * @author darcdev
+ *
+ */
+public class User {
 	
 	private int id;
 	private String username;
 	private String email;
 	private String password;
+	private String token;
+
 	
-	
-	
-	
+	public User() {
+		
+	}
 	public int getId() {
 		return id;
 	}
@@ -34,10 +43,11 @@ public class Users {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
-	
-	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 }

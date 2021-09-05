@@ -3,8 +3,8 @@ const RtAgent = require("../");
 const agent = new RtAgent({
   name: "Robococ",
   username: "darcdev",
-  interval: 1000,
-  token: "5yQZwZsLCaW9W3kmKxx7Ac",
+  interval: 3000,
+  token: "dViI8dL7ixbdrx0m",
 });
 
 agent.addMetric("Distancia", function getRss() {
