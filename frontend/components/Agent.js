@@ -19,20 +19,18 @@ export default function Agent({ uuid, socket, mtToken, removeAgent }) {
   useEffect(() => {
     async function fetchAgent() {
       try {
-        const { data: dataAgent } = await axios.get(
-          `${publicConfig.api_url}/api/agent/${uuid}`
-        );
-
-        setAgent((agent) => {
-          return {
-            ...agent,
-            name: dataAgent.name,
-            hostname: dataAgent.hostname,
-            connected: dataAgent.connected,
-            pid: dataAgent.pid,
-          };
-        });
+        const {
+          data: [dataAgent],
+        } = await axios.get(`${publicConfig.api_url}/api/agent/${uuid}`);
+        setAgent((agent) => ({
+          ...agent,
+          name: dataAgent.name,
+          hostname: dataAgent.hostname,
+          connected: dataAgent.connected,
+          pid: dataAgent.pid,
+        }));
       } catch (error) {
+        console.log(error);
         return;
       }
       try {
@@ -47,6 +45,8 @@ export default function Agent({ uuid, socket, mtToken, removeAgent }) {
           };
         });
       } catch (error) {
+        console.log(error);
+
         return;
       }
     }
@@ -73,7 +73,7 @@ export default function Agent({ uuid, socket, mtToken, removeAgent }) {
   return (
     <div
       className="p-2 sm:p-2 md:p-5 bg-gray-100 mb-2 font-	
-  "
+    "
     >
       <div className="flex justify-between">
         <h3>

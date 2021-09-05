@@ -4,6 +4,9 @@ import Layout from "../components/Layout";
 import Error from "../components/Error";
 import { useRouter } from "next/router";
 import axios from "axios";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig: publicConfig } = getConfig();
 
 export default function Login() {
   const router = useRouter();
@@ -31,12 +34,18 @@ export default function Login() {
       setErrorLogin("Todos Los campos son obligatorios");
       return;
     }
-    // const { data: user } = await axios.post(
-    //   `${publicConfig.api_url}/api/authentication` ,{
-    //     email : userData.email,
-    //   }
-    // );
-    const user = { email: "diegoandresrojas2000@gmail.com", password: "12345" };
+    const {
+      data: [user],
+    } = await axios.get(
+      `${publicConfig.api_url}/api/getuser/${userData.email}`
+    );
+
+    if (!user) {
+      setIsError(true);
+      setErrorLogin("El usuario o contraseña son incorrectos");
+      return;
+    }
+
     if (user.password !== userData.password) {
       setIsError(true);
       setErrorLogin("El usuario o contraseña son incorrectos");
@@ -71,6 +80,7 @@ export default function Login() {
                 </Link>
               </p>
             </div>
+
             {isError && <Error message={errorLogin} />}
             <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
               <div className="rounded-md shadow-sm -space-y-px">

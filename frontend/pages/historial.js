@@ -13,8 +13,11 @@ const History = () => {
 
   useEffect(() => {
     async function fetchAgents() {
+      console.log(JSON.parse(localStorage.getItem("metrictimeUser")).id);
       const { data: savedAgents } = await axios.get(
-        `${publicConfig.api_url}/api/history/agents/1`
+        `${publicConfig.api_url}/api/history/agents/${
+          JSON.parse(localStorage.getItem("metrictimeUser")).id
+        }`
       );
       setAgents([...savedAgents, ...agents]);
       setFilterAgents([...savedAgents]);
@@ -31,8 +34,6 @@ const History = () => {
         agent.hostname.toLowerCase().includes(evt.target.value.toLowerCase())
       );
     });
-
-    console.log(filterAgts);
 
     setFilterAgents([...filterAgts]);
   };

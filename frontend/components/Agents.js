@@ -11,7 +11,9 @@ export default function Agents({ socket, mtToken }) {
   useEffect(() => {
     async function fetchAgents() {
       const { data: savedAgents } = await axios.get(
-        `${publicConfig.api_url}/api/agents/1`
+        `${publicConfig.api_url}/api/agents/${
+          JSON.parse(localStorage.getItem("metrictimeUser")).id
+        }`
       );
       setAgents((agents) => [...savedAgents]);
     }
@@ -22,7 +24,6 @@ export default function Agents({ socket, mtToken }) {
       if (payload.token !== mtToken) return;
       const { uuid } = payload;
       const existAgent = agents.find((agent) => agent.uuid === uuid);
-
       if (!existAgent) {
         setAgents((agents) => [payload.agent, ...agents]);
       }
@@ -57,7 +58,6 @@ export default function Agents({ socket, mtToken }) {
           )}
           {agents.length !== 0 &&
             agents.map((agent) => {
-              console.log("agente ..", agent);
               return (
                 <Agent
                   mtToken={mtToken}

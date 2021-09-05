@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "nodemon server",
-    "start:dev": "node server",
+    "start": "NODE_ENV=production node server.js",
     "build": "next build",
-    "start": "next start",
+    "server": "next start",
     "export": "next build && next export && cp -R ./.next/static ./out/_next/static/"
   },
   "dependencies": {

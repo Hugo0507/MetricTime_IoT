@@ -5,14 +5,18 @@ import HoneyPot from "../components/HoneyPot";
 import Error from "../components/Error";
 import { useRouter } from "next/router";
 import randomstring from "randomstring";
+import getConfig from "next/config";
+import axios from "axios";
+const { publicRuntimeConfig: publicConfig } = getConfig();
 
 export default function Register() {
   const router = useRouter();
   const [isRobot, setIsRobot] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorLogin, setErrorLogin] = useState("");
+  const [register, setRegister] = useState("");
   const [userData, setUserData] = useState({
-    nickname: "",
+    username: "",
     email: "",
     password: "",
     repeatPassword: "",
@@ -25,7 +29,7 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
 
     const form = new FormData(evt.target);
@@ -44,21 +48,35 @@ export default function Register() {
       return;
     }
 
-    const newToken = randomstring.generate(16);
-    // const { data: user } = await axios.post(
-    //   `${publicConfig.api_url}/api/register` , userData
-    // );
-
-    const message = "sss";
-
-    if (!message) {
+    if (userData.repeatPassword !== userData.password) {
       setIsError(true);
-      setErrorLogin("Ocurrio un error en el registro");
+      setErrorLogin("Las contraseñas no coinciden");
+      return;
+    }
+
+    const newToken = randomstring.generate(16);
+
+    const { data: newUser } = await axios.post(
+      `${publicConfig.api_url}/api/postuser`,
+      {
+        username: userData.username,
+        password: userData.password,
+        email: userData.email,
+        token: newToken,
+      }
+    );
+
+    if (newUser.code !== 1) {
+      setIsError(true);
+      setErrorLogin("El correo ya existe, intente con otro nuevo");
       return;
     }
     setIsError(false);
     setErrorLogin("");
-    router.push("/iniciar-sesion");
+    setRegister("Registrado con exito");
+    setTimeout(() => {
+      router.push("/iniciar-sesion");
+    }, 3000);
   };
 
   return (
@@ -85,6 +103,14 @@ export default function Register() {
               </Link>
             </p>
           </div>
+          {register && (
+            <div
+              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+              role="alert"
+            >
+              <span className="block sm:inline">{register}.</span>
+            </div>
+          )}
           {isError && <Error message={errorLogin} />}
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="rounded-md shadow-sm -space-y-px">
@@ -93,8 +119,8 @@ export default function Register() {
                   Nickname
                 </label>
                 <input
-                  id="nickname"
-                  name="nickname"
+                  id="username"
+                  name="username"
                   type="text"
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Nickname"

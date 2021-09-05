@@ -1,26 +1,60 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import getConfig from "next/config";
 import randomstring from "randomstring";
+import Error from "./Error";
+import axios from "axios";
+const { publicRuntimeConfig: publicConfig } = getConfig();
 
 export default function ConfigToken() {
-  let dataUser = {};
-  if (typeof window !== "undefined") {
-    localStorage.getItem("metrictimeUser");
-    // all other localStorage must be wrapped with this is if statement check
-  }
-  const [token, setToken] = useState(
-    dataUser.token || "5yQZwZsLCaW9W3kmKxx7Ac"
-  );
+  const [token, setToken] = useState("");
+  const [user, setUser] = useState({});
+  const [idUser, setIdUser] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [errorLogin, setErrorLogin] = useState("");
+  const [tokenUpdated, setTokenUpdated] = useState("");
+
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("metrictimeUser")) || {
+      token: "",
+    };
+    setToken(user.token);
+    setUser(user);
+    setIdUser(user.id);
+  }, []);
 
   const generateToken = async () => {
     const newToken = randomstring.generate(16);
-    //const { data } = await axios.post(
-    //   `${publicConfig.api_url}/api/user/token` ,{
-    //     token
-    //   }
-    // );
-    const data = { token: "59494949" };
-    setToken(data.token);
+    const { data: tokenUpdate } = await axios.put(
+      `${publicConfig.api_url}/api/putToken`,
+      {
+        id: idUser,
+        token: newToken,
+      }
+    );
+    if (tokenUpdate.code != 1) {
+      setTokenUpdated("");
+      setIsError(true);
+      setErrorLogin("Ha ocurrido un error al generar token");
+      return;
+    }
+    localStorage.removeItem("metrictimeUser");
+    localStorage.setItem(
+      "metrictimeUser",
+      JSON.stringify({
+        ...user,
+        token: newToken,
+      })
+    );
+    setIsError(false);
+    setErrorLogin("");
+    setTokenUpdated("Se ha actualizado el token");
+    setToken(newToken);
+
+    setTimeout(() => {
+      setTokenUpdated("");
+      setIsError(false);
+      setErrorLogin("");
+    }, 3000);
   };
 
   return (
@@ -45,6 +79,15 @@ export default function ConfigToken() {
           </div>
         </div>
         <div className="mt-5 md:mt-0 md:col-span-2">
+          {tokenUpdated && (
+            <div
+              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+              role="alert"
+            >
+              <span className="block sm:inline">{tokenUpdated}.</span>
+            </div>
+          )}
+          {isError && <Error message={errorLogin} />}
           <form>
             <div className="shadow overflow-hidden sm:rounded-md">
               <div className="px-4 py-5 bg-white sm:p-6">

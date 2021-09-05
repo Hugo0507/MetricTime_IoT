@@ -1,12 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import getConfig from "next/config";
+import Error from "./Error";
+import axios from "axios";
+const { publicRuntimeConfig: publicConfig } = getConfig();
 
 export default function InfoProfile() {
+  const [isError, setIsError] = useState(false);
+  const [errorLogin, setErrorLogin] = useState("");
+  const [userUpdated, setUserUpdated] = useState("");
+
   const [userData, setUserData] = useState({
-    nickname: "",
+    username: "",
     email: "",
     password: "",
+    id: "",
   });
 
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("metrictimeUser"));
+    setUserData({
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      id: user.id,
+    });
+  }, []);
   const handleChange = (evt) => {
     setUserData({
       ...userData,
@@ -14,18 +32,39 @@ export default function InfoProfile() {
     });
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
 
-    //const { data } = await axios.post(
-    //   `${publicConfig.api_url}/api/user/info` , userData
-    // );
-
+    console.log(userData);
+    const { data: userUpdate } = await axios.put(
+      `${publicConfig.api_url}/api/putuser`,
+      userData
+    );
+    if (Object.values(userData).includes("")) {
+      setIsError(true);
+      setErrorLogin("Debes llenar los campos");
+      return;
+    }
+    if (userUpdate.code !== 1) {
+      setUserUpdated("");
+      setIsError(true);
+      setErrorLogin("Ha ocurrido un errro al actualizar los campos");
+      return;
+    }
+    setIsError(false);
+    setErrorLogin("");
+    setUserUpdated("Se ha actualizado su información");
     setUserData({
-      email: "diego3000@gmail.com",
-      nickname: "hola",
-      password: "4444",
+      ...userData,
+      email: userData.email,
+      username: userData.username,
+      password: userData.password,
     });
+    setTimeout(() => {
+      setUserUpdated("");
+      setIsError(false);
+      setErrorLogin("");
+    }, 3000);
   };
   return (
     <div className="mt-10 sm:mt-0">
@@ -53,7 +92,16 @@ export default function InfoProfile() {
           </div>
         </div>
         <div className="mt-5 md:mt-0 md:col-span-2">
-          <form action="#" method="POST">
+          {userUpdated && (
+            <div
+              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+              role="alert"
+            >
+              <span className="block sm:inline">{userUpdated}.</span>
+            </div>
+          )}
+          {isError && <Error message={errorLogin} />}
+          <form>
             <div className="shadow overflow-hidden sm:rounded-md">
               <div className="px-4 py-5 bg-white sm:p-6">
                 <div className="grid grid-cols-6 gap-6">
@@ -66,9 +114,9 @@ export default function InfoProfile() {
                     </label>
                     <input
                       type="text"
-                      name="nickname"
+                      name="username"
                       id="nickname"
-                      value={userData.nickname}
+                      value={userData.username}
                       onChange={handleChange}
                       className="p-4 mt-1 focus:ring-indigo-500  h-8 border-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />

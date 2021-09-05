@@ -6,21 +6,17 @@ import io from "socket.io-client";
 
 export default function Dashboard() {
   const router = useRouter();
-  const [socket, setSocket] = useState(null);
+  const socket = io();
+  socket.open();
+
   const [mtToken, setMtToken] = useState(null);
+
   useEffect(() => {
     if (!localStorage.getItem("metrictimeUser")) {
       router.push("/iniciar-sesion");
       return;
     }
-
-    const socket = io();
-    socket.open();
-    setSocket(socket);
-
-    setMtToken(
-      localStorage.getItem("metrictime-token") || "5yQZwZsLCaW9W3kmKxx7Ac"
-    );
+    setMtToken(JSON.parse(localStorage.getItem("metrictimeUser")).token);
     return () => {
       socket.close();
     };
@@ -43,7 +39,9 @@ export default function Dashboard() {
 
           <div className="px-4 py-6 sm:px-0">
             <div className="border-4 border-dashed border-gray-200 h-auto rounded-lg h-96 p-4	">
-              {socket && <Agents mtToken={mtToken} socket={socket} />}
+              {socket && mtToken && (
+                <Agents mtToken={mtToken} socket={socket} />
+              )}
             </div>
           </div>
         </div>
