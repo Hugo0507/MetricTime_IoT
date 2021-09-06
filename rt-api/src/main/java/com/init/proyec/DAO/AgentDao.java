@@ -1,8 +1,6 @@
 package com.init.proyec.DAO;
 
 import java.util.List;
-import java.util.Optional;
-
 /**
  * Metodos realizados por un agente de un usuario
  * @author metricTime
@@ -28,6 +26,5 @@ public interface AgentDao<T> {
 	 * @return
 	 */
 	List<T> getAgents(String uuid);
-	//Optional<T> getAgent(String uuid);
 	
 }

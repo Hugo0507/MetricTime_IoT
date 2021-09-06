@@ -1,7 +1,4 @@
 package com.init.proyec.entity;
-
-import java.sql.Date;
-
 /**
  * Modelo de datos de Usuario
  * @author darcdev

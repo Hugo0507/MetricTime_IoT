@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 module.exports = function setConfigDB(extraConfig) {
   const config = {
     database: process.env.DB_NAME || "metrictime",

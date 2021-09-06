@@ -1,15 +1,9 @@
 package com.init.proyec.services;
 
 import java.util.List;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
 import com.init.proyec.DAO.AgentDao;
 import com.init.proyec.entity.Agent;
 
@@ -18,10 +12,9 @@ import com.init.proyec.entity.Agent;
  * @author metricTime
  *
  */
-@Component
+@Service
 public class AgentServices implements AgentDao<Agent>{
 	
-	private static final Logger log = LoggerFactory.getLogger(AgentServices.class);
 	JdbcTemplate jdbcTemplate;
 	
     /**
@@ -34,18 +27,6 @@ public class AgentServices implements AgentDao<Agent>{
     /**
      * Implementar metodo de obtener Agente
      */
-	/*@Override
-	public Optional<Agent> getAgent(String uuid) {
-		 String sql = "SELECT id, name, hostname, connected, pid FROM agents WHERE uuid LIKE ?";
-	        Agent agente = null;
-	        try {
-	        	agente = jdbcTemplate.queryForObject(sql,agentMapper,uuid);
-	        }catch (DataAccessException ex) {
-	            log.info("UUID no encontrada: "+ uuid );
-	        }
-	        return Optional.ofNullable(agente);
-	}*/
-	
 	@Override
 	public List<Agent> getAgents(String uuid) {
 		

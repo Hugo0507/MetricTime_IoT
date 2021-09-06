@@ -366,3 +366,8 @@ template {
     height: 70% !important;
   }
 } */
+
+object {
+  height: 100vh !important;
+  width: 100% !important;
+}

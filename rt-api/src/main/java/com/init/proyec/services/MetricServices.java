@@ -1,25 +1,20 @@
 package com.init.proyec.services;
 
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
 import com.init.proyec.DAO.MetricDao;
 import com.init.proyec.entity.Metric;
-
 /**
  * Se encarga de implementar todas las acciones llamadas desde el controlador
  * @author metricTime
  *
  */
-@Component
+@Service
 public class MetricServices implements MetricDao<Metric>{
 	
-	private static final Logger log = LoggerFactory.getLogger(MetricServices.class);
+
 	JdbcTemplate jdbcTemplate;
 	
     /**

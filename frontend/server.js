@@ -23,11 +23,11 @@ nextApp.prepare().then(() => {
     return nextHandler(req, res);
   });
   // iniciamos el servidor HTTP en el puerto 4000
-  server = app.listen(4000, (err) => {
+  const PORT = process.env.PORT;
+  server = app.listen(PORT || 4000, (err) => {
     // si ocurre un error matamos el proceso
     if (err) process.exit(0);
     // si todo está bien dejamos un log en consola
-    console.log("> Ready on http://localhost:4000");
     agent.connect();
   });
 

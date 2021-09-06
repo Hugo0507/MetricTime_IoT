@@ -87,7 +87,6 @@ export default function Register() {
             <img
               className="mx-auto w-30 h-30"
               src="/images/logo.png"
-              alt="Workflow"
               alt="icono logo"
             />
             <h1 className="text-center text-3xl font-extrabold text-gray-900">

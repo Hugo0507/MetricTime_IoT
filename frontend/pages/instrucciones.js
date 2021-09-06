@@ -1,8 +1,21 @@
+import Layout from "../components/Layout";
+import { useState, useEffect } from "react";
+
 const Instructions = () => {
   return (
-    <div>
-      <h2>Instrucciones</h2>
-    </div>
+    <Layout title="Instrucciones" notHeader="true">
+      <div style={{ width: "100%", height: "100%" }}>
+        <object
+          data="/assets/HardwareInstrucciones.pdf"
+          type="application/pdf"
+          style={{
+            minHeight: "100vh !important",
+            width: "100vw !important",
+            height: `100vh !important`,
+          }}
+        />
+      </div>
+    </Layout>
   );
 };
 

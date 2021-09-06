@@ -3,25 +3,19 @@ package com.init.proyec.services;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.RowMapper;
-
 import com.init.proyec.DAO.UserDao;
 import com.init.proyec.entity.User;
 
 
-@Component
+@Service
 public class UserServices implements UserDao<User> {
 	
-	@SuppressWarnings("unused")
-	private static final Logger log = LoggerFactory.getLogger(MetricServices.class);
 	JdbcTemplate jdbcTemplate;
 	
 	public UserServices(JdbcTemplate jdbcTemplate) {
@@ -100,8 +94,4 @@ public class UserServices implements UserDao<User> {
         user.setToken(rs.getString("token"));
         return user;
     };
-
-
-	
-
 }
